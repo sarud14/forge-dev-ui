@@ -1,9 +1,10 @@
-import type { ButtonVariant, InputTone, Size } from '@/components/ui'
+import type { ButtonVariant, InputTone, Size, ToastTone } from '@/components/ui'
 import { EMAIL_INVALID_MESSAGE } from '@/validators/email.validators'
 
 const BUTTON_VARIANTS: readonly ButtonVariant[] = ['primary', 'secondary', 'ghost', 'destructive']
 const SIZES: readonly Size[] = ['sm', 'md', 'lg']
 const INPUT_TONES: readonly InputTone[] = ['neutral', 'danger']
+const TOAST_TONES: readonly ToastTone[] = ['neutral', 'success', 'danger']
 
 export function isButtonVariant(value: string): value is ButtonVariant {
   return BUTTON_VARIANTS.some((variant) => variant === value)
@@ -15,6 +16,10 @@ export function isSize(value: string): value is Size {
 
 export function isInputTone(value: string): value is InputTone {
   return INPUT_TONES.some((tone) => tone === value)
+}
+
+export function isToastTone(value: string): value is ToastTone {
+  return TOAST_TONES.some((tone) => tone === value)
 }
 
 export function generateButtonCode(props: {
@@ -50,4 +55,18 @@ export function generateInputCode(props: {
   return `<Input${attrString} placeholder="you@example.com" />`
 }
 
-export { BUTTON_VARIANTS, SIZES, INPUT_TONES, EMAIL_INVALID_MESSAGE }
+export function generateToastCode(props: {
+  readonly tone: ToastTone
+  readonly title: string
+  readonly description: string
+}): string {
+  const fields = [
+    props.tone !== 'neutral' ? `tone: '${props.tone}'` : null,
+    `title: '${props.title}'`,
+    props.description !== '' ? `description: '${props.description}'` : null,
+  ].filter((field): field is string => field !== null)
+
+  return `toast({ ${fields.join(', ')} })`
+}
+
+export { BUTTON_VARIANTS, SIZES, INPUT_TONES, TOAST_TONES, EMAIL_INVALID_MESSAGE }

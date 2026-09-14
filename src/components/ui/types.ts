@@ -5,8 +5,8 @@ export type Size = 'sm' | 'md' | 'lg'
 
 /**
  * Semantic feedback tone. Input consumes the `neutral`/`danger` subset via `InputTone`.
- * Toast will use the remaining values (requirement doc §10.4, Build Order step 8). Button
- * uses `variant` instead of `tone`.
+ * Toast consumes `neutral`/`success`/`danger` via `ToastTone`. Button uses `variant`
+ * instead of `tone`. Remaining `Tone` values stay reserved for later feedback surfaces.
  */
 export type Tone = 'neutral' | 'success' | 'info' | 'warning' | 'danger' | 'brand'
 
@@ -42,4 +42,24 @@ export interface DialogProps {
   readonly children?: ReactNode
   readonly open?: boolean
   readonly onOpenChange?: (open: boolean) => void
+}
+
+/** Toast tones from DESIGN_SYSTEM.md — a closed subset of `Tone`, not a parallel palette. */
+export type ToastTone = Extract<Tone, 'neutral' | 'success' | 'danger'>
+
+/** Arguments for the imperative `toast()` helper. */
+export interface ToastInput {
+  readonly tone?: ToastTone
+  readonly title: string
+  readonly description?: string
+  readonly duration?: number
+}
+
+/** Queued toast as rendered by `Toaster`. */
+export interface ToastRecord {
+  readonly id: string
+  readonly tone: ToastTone
+  readonly title: string
+  readonly description?: string
+  readonly duration: number
 }

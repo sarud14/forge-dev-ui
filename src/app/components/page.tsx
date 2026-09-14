@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import type { JSX } from 'react'
 import { ButtonDoc } from '@/features/components/ButtonDoc'
 import { InputDoc } from '@/features/components/InputDoc'
+import { ToastDoc } from '@/features/components/ToastDoc'
 
 export const metadata: Metadata = { title: 'Components' }
 
@@ -40,7 +41,7 @@ export default function ComponentsPage(): JSX.Element {
         }}
       >
         Production-quality primitives with documented states, accessibility notes, and live
-        previews. Phase 1 starts with Button and Input.
+        previews. Phase 1 currently ships Button, Input, Dialog, and Toast.
       </p>
 
       <section aria-labelledby="components-button-heading" style={{ marginBottom: 'var(--space-8)' }}>
@@ -70,7 +71,7 @@ export default function ComponentsPage(): JSX.Element {
         <ButtonDoc />
       </section>
 
-      <section aria-labelledby="components-input-heading">
+      <section aria-labelledby="components-input-heading" style={{ marginBottom: 'var(--space-8)' }}>
         <h2
           id="components-input-heading"
           style={{
@@ -95,6 +96,33 @@ export default function ComponentsPage(): JSX.Element {
           bind through standard input props — Input does not import either library.
         </p>
         <InputDoc />
+      </section>
+
+      <section aria-labelledby="components-toast-heading">
+        <h2
+          id="components-toast-heading"
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'var(--text-lg)',
+            fontWeight: 600,
+            margin: '0 0 var(--space-2)',
+          }}
+        >
+          Toast
+        </h2>
+        <p
+          style={{
+            fontSize: 'var(--text-base)',
+            color: 'var(--color-muted-foreground)',
+            lineHeight: 'var(--leading-relaxed)',
+            maxWidth: 600,
+            margin: '0 0 var(--space-6)',
+          }}
+        >
+          Transient notification fired with <code>toast()</code> and announced in a live region.
+          Mount <code>Toaster</code> once in the root layout.
+        </p>
+        <ToastDoc />
       </section>
     </div>
   )
