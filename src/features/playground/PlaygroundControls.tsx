@@ -1,34 +1,25 @@
 'use client'
 
 import { useState, type ChangeEvent, type JSX } from 'react'
-import { Button, Dialog } from '@/components/ui'
-import type { ButtonVariant, Size } from '@/components/ui'
-
-const variantOptions: readonly ButtonVariant[] = ['primary', 'secondary', 'ghost', 'destructive']
-const sizeOptions: readonly Size[] = ['sm', 'md', 'lg']
-
-function generateCode(props: {
-  readonly variant: ButtonVariant
-  readonly size: Size
-  readonly label: string
-  readonly disabled: boolean
-  readonly isLoading: boolean
-}): string {
-  const attrs = [
-    props.variant !== 'primary' ? `variant="${props.variant}"` : null,
-    props.size !== 'md' ? `size="${props.size}"` : null,
-    props.disabled ? 'disabled' : null,
-    props.isLoading ? 'isLoading' : null,
-  ].filter((attr): attr is string => attr !== null)
-
-  const attrString = attrs.length > 0 ? ` ${attrs.join(' ')}` : ''
-  return `<Button${attrString}>${props.label}</Button>`
-}
+import { Button, Dialog, Input } from '@/components/ui'
+import type { ButtonVariant, InputTone, Size } from '@/components/ui'
+import {
+  BUTTON_VARIANTS,
+  EMAIL_INVALID_MESSAGE,
+  generateButtonCode,
+  generateInputCode,
+  INPUT_TONES,
+  isButtonVariant,
+  isInputTone,
+  isSize,
+  SIZES,
+} from './playgroundQuery'
+import { PlaygroundEmailForm } from './PlaygroundEmailForm'
 
 /**
- * Interactive Button playground: adjust props, read the generated code, see it change live
- * (requirement/forge-requirements.md — Playground route). Client component for the same reason
- * as ButtonDoc — the whole point is live prop manipulation.
+ * Interactive Button and Input playground: adjust props, read the generated code, see it
+ * change live (requirement/forge-requirements.md — Playground route). Client component for
+ * the same reason as ButtonDoc — the whole point is live prop manipulation.
  */
 export function PlaygroundControls(): JSX.Element {
   const [variant, setVariant] = useState<ButtonVariant>('primary')
@@ -36,122 +27,220 @@ export function PlaygroundControls(): JSX.Element {
   const [label, setLabel] = useState('Button')
   const [disabled, setDisabled] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [tone, setTone] = useState<InputTone>('neutral')
+  const [inputDisabled, setInputDisabled] = useState(false)
+  const [showError, setShowError] = useState(false)
+
+  const inputErrorMessage = showError ? EMAIL_INVALID_MESSAGE : undefined
 
   function handleLabelChange(event: ChangeEvent<HTMLInputElement>): void {
     setLabel(event.target.value)
   }
 
+  function handleVariantChange(event: ChangeEvent<HTMLSelectElement>): void {
+    if (isButtonVariant(event.target.value)) {
+      setVariant(event.target.value)
+    }
+  }
+
+  function handleSizeChange(event: ChangeEvent<HTMLSelectElement>): void {
+    if (isSize(event.target.value)) {
+      setSize(event.target.value)
+    }
+  }
+
+  function handleToneChange(event: ChangeEvent<HTMLSelectElement>): void {
+    if (isInputTone(event.target.value)) {
+      setTone(event.target.value)
+    }
+  }
+
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-        <div>
-          <label htmlFor="playground-variant" style={labelStyle}>
-            Variant
-          </label>
-          <select
-            id="playground-variant"
-            value={variant}
-            onChange={(event) => setVariant(event.target.value as ButtonVariant)}
-            style={fieldStyle}
-          >
-            {variantOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-8)' }}>
+      <section aria-labelledby="playground-button-heading">
+        <h2 id="playground-button-heading" style={sectionHeadingStyle}>
+          Button
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <div>
+              <label htmlFor="playground-variant" style={labelStyle}>
+                Variant
+              </label>
+              <select
+                id="playground-variant"
+                value={variant}
+                onChange={handleVariantChange}
+                style={fieldStyle}
+              >
+                {BUTTON_VARIANTS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="playground-size" style={labelStyle}>
+                Size
+              </label>
+              <select id="playground-size" value={size} onChange={handleSizeChange} style={fieldStyle}>
+                {SIZES.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="playground-label" style={labelStyle}>
+                Label
+              </label>
+              <input
+                id="playground-label"
+                type="text"
+                value={label}
+                onChange={handleLabelChange}
+                style={fieldStyle}
+              />
+            </div>
+
+            <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <input
+                type="checkbox"
+                checked={disabled}
+                onChange={(event) => setDisabled(event.target.checked)}
+              />
+              Disabled
+            </label>
+
+            <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <input
+                type="checkbox"
+                checked={isLoading}
+                onChange={(event) => setIsLoading(event.target.checked)}
+              />
+              Loading
+            </label>
+
+            <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: 'var(--space-4)' }}>
+              <Dialog
+                trigger={<Button variant="secondary">Open dialog demo</Button>}
+                title="Delete component?"
+                description="This demonstrates Dialog's focus-trap, Escape-to-close, and overlay-click dismissal."
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: 220,
+                borderRadius: 'var(--radius-lg)',
+                border: '1px solid var(--color-border)',
+                background: 'var(--color-muted)',
+              }}
+            >
+              <Button variant={variant} size={size} disabled={disabled} isLoading={isLoading}>
+                {label}
+              </Button>
+            </div>
+
+            <pre style={preStyle}>{generateButtonCode({ variant, size, label, disabled, isLoading })}</pre>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="playground-input-heading">
+        <h2 id="playground-input-heading" style={sectionHeadingStyle}>
+          Input
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <div>
+              <label htmlFor="playground-input-tone" style={labelStyle}>
+                Tone
+              </label>
+              <select
+                id="playground-input-tone"
+                value={tone}
+                onChange={handleToneChange}
+                style={fieldStyle}
+              >
+                {INPUT_TONES.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <input
+                type="checkbox"
+                checked={inputDisabled}
+                onChange={(event) => setInputDisabled(event.target.checked)}
+              />
+              Input disabled
+            </label>
+
+            <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <input
+                type="checkbox"
+                checked={showError}
+                onChange={(event) => setShowError(event.target.checked)}
+              />
+              Show error
+            </label>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: 220,
+                borderRadius: 'var(--radius-lg)',
+                border: '1px solid var(--color-border)',
+                background: 'var(--color-muted)',
+                padding: 'var(--space-4)',
+              }}
+            >
+              <Input
+                aria-label="Preview input"
+                placeholder="you@example.com"
+                tone={tone}
+                disabled={inputDisabled}
+                errorMessage={inputErrorMessage}
+              />
+            </div>
+
+            <pre style={preStyle}>
+              {generateInputCode({ tone, disabled: inputDisabled, errorMessage: inputErrorMessage })}
+            </pre>
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="playground-size" style={labelStyle}>
-            Size
-          </label>
-          <select
-            id="playground-size"
-            value={size}
-            onChange={(event) => setSize(event.target.value as Size)}
-            style={fieldStyle}
-          >
-            {sizeOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+        <div style={{ marginTop: 'var(--space-4)' }}>
+          <PlaygroundEmailForm />
         </div>
-
-        <div>
-          <label htmlFor="playground-label" style={labelStyle}>
-            Label
-          </label>
-          <input
-            id="playground-label"
-            type="text"
-            value={label}
-            onChange={handleLabelChange}
-            style={fieldStyle}
-          />
-        </div>
-
-        <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <input type="checkbox" checked={disabled} onChange={(event) => setDisabled(event.target.checked)} />
-          Disabled
-        </label>
-
-        <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <input
-            type="checkbox"
-            checked={isLoading}
-            onChange={(event) => setIsLoading(event.target.checked)}
-          />
-          Loading
-        </label>
-
-        <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: 'var(--space-4)' }}>
-          <Dialog
-            trigger={<Button variant="secondary">Open dialog demo</Button>}
-            title="Delete component?"
-            description="This demonstrates Dialog's focus-trap, Escape-to-close, and overlay-click dismissal."
-          />
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: 220,
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-border)',
-            background: 'var(--color-muted)',
-          }}
-        >
-          <Button variant={variant} size={size} disabled={disabled} isLoading={isLoading}>
-            {label}
-          </Button>
-        </div>
-
-        <pre
-          style={{
-            background: 'var(--color-muted)',
-            border: '1px solid var(--color-border)',
-            borderRadius: 'var(--radius-md)',
-            padding: 'var(--space-4)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'var(--text-sm)',
-            color: 'var(--color-foreground)',
-            overflowX: 'auto',
-            margin: 0,
-          }}
-        >
-          {generateCode({ variant, size, label, disabled, isLoading })}
-        </pre>
-      </div>
+      </section>
     </div>
   )
 }
+
+const sectionHeadingStyle = {
+  fontFamily: 'var(--font-serif)',
+  fontSize: 'var(--text-lg)',
+  fontWeight: 600,
+  margin: '0 0 var(--space-4)',
+} as const
 
 const labelStyle = {
   display: 'block',
@@ -170,4 +259,16 @@ const fieldStyle = {
   color: 'var(--color-foreground)',
   fontSize: 'var(--text-sm)',
   fontFamily: 'var(--font-sans)',
+} as const
+
+const preStyle = {
+  background: 'var(--color-muted)',
+  border: '1px solid var(--color-border)',
+  borderRadius: 'var(--radius-md)',
+  padding: 'var(--space-4)',
+  fontFamily: 'var(--font-mono)',
+  fontSize: 'var(--text-sm)',
+  color: 'var(--color-foreground)',
+  overflowX: 'auto',
+  margin: 0,
 } as const

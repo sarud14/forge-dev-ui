@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { JSX } from 'react'
 import { ButtonDoc } from '@/features/components/ButtonDoc'
+import { InputDoc } from '@/features/components/InputDoc'
 
 export const metadata: Metadata = { title: 'Components' }
 
@@ -27,7 +28,7 @@ export default function ComponentsPage(): JSX.Element {
           margin: '0 0 var(--space-2)',
         }}
       >
-        Button
+        Components
       </h1>
       <p
         style={{
@@ -35,14 +36,66 @@ export default function ComponentsPage(): JSX.Element {
           color: 'var(--color-muted-foreground)',
           lineHeight: 'var(--leading-relaxed)',
           maxWidth: 600,
-          margin: '0 0 var(--space-6)',
+          margin: '0 0 var(--space-8)',
         }}
       >
-        Trigger for an action, built on native button semantics. Four variants, three sizes, and
-        default/hover/focus/active/disabled/loading states.
+        Production-quality primitives with documented states, accessibility notes, and live
+        previews. Phase 1 starts with Button and Input.
       </p>
 
-      <ButtonDoc />
+      <section aria-labelledby="components-button-heading" style={{ marginBottom: 'var(--space-8)' }}>
+        <h2
+          id="components-button-heading"
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'var(--text-lg)',
+            fontWeight: 600,
+            margin: '0 0 var(--space-2)',
+          }}
+        >
+          Button
+        </h2>
+        <p
+          style={{
+            fontSize: 'var(--text-base)',
+            color: 'var(--color-muted-foreground)',
+            lineHeight: 'var(--leading-relaxed)',
+            maxWidth: 600,
+            margin: '0 0 var(--space-6)',
+          }}
+        >
+          Trigger for an action, built on native button semantics. Four variants, three sizes, and
+          default/hover/focus/active/disabled/loading states.
+        </p>
+        <ButtonDoc />
+      </section>
+
+      <section aria-labelledby="components-input-heading">
+        <h2
+          id="components-input-heading"
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'var(--text-lg)',
+            fontWeight: 600,
+            margin: '0 0 var(--space-2)',
+          }}
+        >
+          Input
+        </h2>
+        <p
+          style={{
+            fontSize: 'var(--text-base)',
+            color: 'var(--color-muted-foreground)',
+            lineHeight: 'var(--leading-relaxed)',
+            maxWidth: 600,
+            margin: '0 0 var(--space-6)',
+          }}
+        >
+          Native text field with a danger tone and associated error text. React Hook Form and Zod
+          bind through standard input props — Input does not import either library.
+        </p>
+        <InputDoc />
+      </section>
     </div>
   )
 }
