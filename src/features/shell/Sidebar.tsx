@@ -3,7 +3,7 @@
 import type { JSX } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LOGO_MARK } from '@/constants/seo'
+import { LOGO_MARK, SITE_NAME } from '@/constants/seo'
 import { isNavItemActive, navItems } from './navItems'
 
 /**
@@ -30,7 +30,11 @@ export function Sidebar(): JSX.Element {
     >
       {/* Logo mark — Chevron Peak shape from design/forge-logo-directions, colored with
           --color-brand so the lockup matches the Editorial Dark CI (teal), not a separate accent. */}
-      <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <Link
+        href="/"
+        aria-label={SITE_NAME}
+        style={{ display: 'flex', alignItems: 'center', gap: 10 }}
+      >
         <svg
           width="26"
           height="26"
