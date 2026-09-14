@@ -9,6 +9,8 @@ describe('PlaygroundControls', () => {
 
     expect(screen.getByRole('button', { name: 'Button' })).toBeInTheDocument()
     expect(screen.getByText('<Button>Button</Button>')).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: 'Preview input' })).toBeInTheDocument()
+    expect(screen.getByText('<Input placeholder="you@example.com" />')).toBeInTheDocument()
   })
 
   it('updates the preview and generated code when the label changes', async () => {
@@ -41,6 +43,21 @@ describe('PlaygroundControls', () => {
     await user.click(screen.getByLabelText('Loading'))
 
     expect(screen.getByText('<Button disabled isLoading>Button</Button>')).toBeInTheDocument()
+  })
+
+  it('updates the generated Input code when tone, disabled, and error change', async () => {
+    const user = userEvent.setup()
+    render(<PlaygroundControls />)
+
+    await user.selectOptions(screen.getByLabelText('Tone'), 'danger')
+    await user.click(screen.getByLabelText('Input disabled'))
+    await user.click(screen.getByLabelText('Show error'))
+
+    expect(
+      screen.getByText(
+        '<Input tone="danger" disabled errorMessage="Enter a valid email" placeholder="you@example.com" />'
+      )
+    ).toBeInTheDocument()
   })
 
   it('opens the dialog demo from the trigger button', async () => {

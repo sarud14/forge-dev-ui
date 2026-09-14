@@ -4,8 +4,8 @@
 Scaffolded. Tokens and the Button/Dialog components below reflect the "Editorial Dark" visual
 direction (design/Forge Prototype Editorial Dark standalone.html, adopted 2026-09-11 — see
 "Design tokens" and "Status / gaps" below), which fully replaced the earlier amber/JetBrains-Mono
-brand direction. Tabs/Tooltip/Input/Select/Toast/Data Table are still proposed only — treat those
-sections as a draft to confirm during Build Order steps 7-10, not a locked decision.
+brand direction. Tabs/Tooltip/Select/Toast/Data Table are still proposed only — treat those
+sections as a draft to confirm during Build Order steps 8-10, not a locked decision.
 -->
 
 The local, editable design system for Forge. Hand-built from scratch — Forge's whole point is
@@ -19,8 +19,8 @@ demonstrating the design decisions behind each primitive, not porting an existin
 Everything is re-exported from the barrel — always import from `@/components/ui`:
 
 ```tsx
-import { Button, Dialog } from '@/components/ui';
-import type { ButtonProps } from '@/components/ui';
+import { Button, Input, Dialog } from '@/components/ui';
+import type { ButtonProps, InputProps } from '@/components/ui';
 ```
 
 ---
@@ -34,7 +34,7 @@ components/ui/
   helpers.ts        className-string derivations
   tokens/           token CSS files (see "Design tokens" below)
   core/             Button (built), Tabs, Tooltip (proposed)
-  forms/            Input, Select (proposed)
+  forms/            Input (built), Select (proposed)
   feedback/         Dialog (built), Toast (proposed)
   data/             Data Table (proposed)
 ```
@@ -206,15 +206,17 @@ Wraps Radix Tooltip for supplementary labels.
 
 ### Forms
 
-#### `Input`
+#### `Input` — built
 
-Text input bound to React Hook Form + Zod validation (per Ruj's core stack).
+Native text input. React Hook Form + Zod bind through standard input props — this primitive
+does not import either library (see `/playground` email demo).
 
-- `size` (`'md'`) · `tone` (`'neutral' | 'danger'` for error state) · `disabled` ·
-  `aria-invalid` reflects validation state
+- `size` (`'md'` only in Phase 1) · `tone` (`'neutral' | 'danger'` for error state) · `disabled` ·
+  `errorMessage?` (sets `aria-invalid` and `aria-describedby` on the visible error text)
 
 ```tsx
 <Input placeholder="you@example.com" />
+<Input errorMessage="Enter a valid email" placeholder="you@example.com" />
 ```
 
 #### `Select`
@@ -321,13 +323,14 @@ Testing Conventions).
 
 ## Status / gaps
 
-- **Fully styled and in use:** `Button`, `Dialog`. "Editorial Dark" is the locked visual
+- **Fully styled and in use:** `Button`, `Input`, `Dialog`. "Editorial Dark" is the locked visual
   direction as of 2026-09-11 (dark-only, no light theme) — see "Design tokens" above and
   `design/Forge Prototype Editorial Dark standalone.html` for the source mockup.
 - **Screens built against the new system:** `/` (Home), `/foundations` (token showcase),
-  `/components` (Button doc: Preview/Code/Accessibility tabs, via
-  `src/features/components/ButtonDoc.tsx`), `/playground` (live Button prop editor + Dialog demo,
-  via `src/features/playground/PlaygroundControls.tsx`).
+  `/components` (Button and Input docs: Preview/Code/Accessibility tabs, via
+  `src/features/components/ButtonDoc.tsx` and `InputDoc.tsx`), `/playground` (live Button and
+  Input prop editors + Dialog demo + RHF/Zod email form, via
+  `src/features/playground/PlaygroundControls.tsx`).
 - **Not yet restyled:** `/patterns` and `/engineering` remain the original plain placeholder
   stub pages (no sidebar-shell styling applied) — out of scope for this pass since the mockup
   didn't cover those routes; restyle when their real content is built.

@@ -27,7 +27,7 @@ export default function PlaygroundPage(): JSX.Element {
           margin: '0 0 var(--space-2)',
         }}
       >
-        Try Button
+        Try Button and Input
       </h1>
       <p
         style={{
@@ -38,7 +38,9 @@ export default function PlaygroundPage(): JSX.Element {
           margin: '0 0 var(--space-6)',
         }}
       >
-        Adjust props on the left, read the generated code, and see the result live.
+        Adjust props on the left, read the generated code, and see the result live. Input also
+        has a React Hook Form + Zod email demo so validation is composed onto the primitive,
+        not baked into it.
       </p>
 
       <PlaygroundControls />
