@@ -1,24 +1,27 @@
 'use client'
 
 import { useState, type ChangeEvent, type JSX } from 'react'
-import { Button, Dialog, Input } from '@/components/ui'
-import type { ButtonVariant, InputTone, Size } from '@/components/ui'
+import { Button, Dialog, Input, toast } from '@/components/ui'
+import type { ButtonVariant, InputTone, Size, ToastTone } from '@/components/ui'
 import {
   BUTTON_VARIANTS,
   EMAIL_INVALID_MESSAGE,
   generateButtonCode,
   generateInputCode,
+  generateToastCode,
   INPUT_TONES,
   isButtonVariant,
   isInputTone,
   isSize,
+  isToastTone,
   SIZES,
+  TOAST_TONES,
 } from './playgroundQuery'
 import { PlaygroundEmailForm } from './PlaygroundEmailForm'
 
 /**
- * Interactive Button and Input playground: adjust props, read the generated code, see it
- * change live (requirement/forge-requirements.md — Playground route). Client component for
+ * Interactive Button, Input, and Toast playground: adjust props, read the generated code,
+ * see it change live (requirement/forge-requirements.md — Playground route). Client component for
  * the same reason as ButtonDoc — the whole point is live prop manipulation.
  */
 export function PlaygroundControls(): JSX.Element {
@@ -30,6 +33,9 @@ export function PlaygroundControls(): JSX.Element {
   const [tone, setTone] = useState<InputTone>('neutral')
   const [inputDisabled, setInputDisabled] = useState(false)
   const [showError, setShowError] = useState(false)
+  const [toastTone, setToastTone] = useState<ToastTone>('success')
+  const [toastTitle, setToastTitle] = useState('Saved')
+  const [toastDescription, setToastDescription] = useState('')
 
   const inputErrorMessage = showError ? EMAIL_INVALID_MESSAGE : undefined
 
@@ -52,6 +58,12 @@ export function PlaygroundControls(): JSX.Element {
   function handleToneChange(event: ChangeEvent<HTMLSelectElement>): void {
     if (isInputTone(event.target.value)) {
       setTone(event.target.value)
+    }
+  }
+
+  function handleToastToneChange(event: ChangeEvent<HTMLSelectElement>): void {
+    if (isToastTone(event.target.value)) {
+      setToastTone(event.target.value)
     }
   }
 
@@ -229,6 +241,80 @@ export function PlaygroundControls(): JSX.Element {
 
         <div style={{ marginTop: 'var(--space-4)' }}>
           <PlaygroundEmailForm />
+        </div>
+      </section>
+
+      <section aria-labelledby="playground-toast-heading">
+        <h2 id="playground-toast-heading" style={sectionHeadingStyle}>
+          Toast
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <div>
+              <label htmlFor="playground-toast-tone" style={labelStyle}>
+                Toast tone
+              </label>
+              <select
+                id="playground-toast-tone"
+                value={toastTone}
+                onChange={handleToastToneChange}
+                style={fieldStyle}
+              >
+                {TOAST_TONES.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="playground-toast-title" style={labelStyle}>
+                Toast title
+              </label>
+              <input
+                id="playground-toast-title"
+                type="text"
+                value={toastTitle}
+                onChange={(event) => setToastTitle(event.target.value)}
+                style={fieldStyle}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="playground-toast-description" style={labelStyle}>
+                Toast description
+              </label>
+              <input
+                id="playground-toast-description"
+                type="text"
+                value={toastDescription}
+                onChange={(event) => setToastDescription(event.target.value)}
+                style={fieldStyle}
+              />
+            </div>
+
+            <Button
+              variant="secondary"
+              onClick={() => {
+                toast({
+                  tone: toastTone,
+                  title: toastTitle,
+                  description: toastDescription === '' ? undefined : toastDescription,
+                })
+              }}
+            >
+              Show toast
+            </Button>
+          </div>
+
+          <pre style={preStyle}>
+            {generateToastCode({
+              tone: toastTone,
+              title: toastTitle,
+              description: toastDescription,
+            })}
+          </pre>
         </div>
       </section>
     </div>

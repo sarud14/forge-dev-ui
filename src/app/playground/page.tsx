@@ -27,7 +27,7 @@ export default function PlaygroundPage(): JSX.Element {
           margin: '0 0 var(--space-2)',
         }}
       >
-        Try Button and Input
+        Try Button, Input, and Toast
       </h1>
       <p
         style={{
@@ -40,7 +40,7 @@ export default function PlaygroundPage(): JSX.Element {
       >
         Adjust props on the left, read the generated code, and see the result live. Input also
         has a React Hook Form + Zod email demo so validation is composed onto the primitive,
-        not baked into it.
+        not baked into it. Toast is fired with <code>toast()</code> into the app-wide live region.
       </p>
 
       <PlaygroundControls />

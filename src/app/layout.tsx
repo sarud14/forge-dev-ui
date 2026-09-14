@@ -4,6 +4,7 @@ import { Public_Sans, Spectral, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import { env } from '@/env'
 import { SITE_DESCRIPTION } from '@/constants/seo'
+import { Toaster } from '@/components/ui'
 import { Sidebar } from '@/features/shell/Sidebar'
 import { buildSiteMetadata, buildWebSiteJsonLd } from '@/lib/seo/siteMetadata'
 
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: ReactNode }): JSX.E
           <Sidebar />
           <main style={{ flex: 1, minWidth: 0, overflow: 'auto' }}>{children}</main>
         </div>
+        <Toaster />
       </body>
     </html>
   )

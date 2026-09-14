@@ -4,8 +4,8 @@
 Scaffolded. Tokens and the Button/Dialog components below reflect the "Editorial Dark" visual
 direction (design/Forge Prototype Editorial Dark standalone.html, adopted 2026-09-11 — see
 "Design tokens" and "Status / gaps" below), which fully replaced the earlier amber/JetBrains-Mono
-brand direction. Tabs/Tooltip/Select/Toast/Data Table are still proposed only — treat those
-sections as a draft to confirm during Build Order steps 8-10, not a locked decision.
+brand direction. Tabs/Tooltip/Select/Data Table are still proposed only — treat those
+sections as a draft to confirm during Build Order steps 9-10, not a locked decision.
 -->
 
 The local, editable design system for Forge. Hand-built from scratch — Forge's whole point is
@@ -19,7 +19,7 @@ demonstrating the design decisions behind each primitive, not porting an existin
 Everything is re-exported from the barrel — always import from `@/components/ui`:
 
 ```tsx
-import { Button, Input, Dialog } from '@/components/ui';
+import { Button, Input, Dialog, toast, Toaster } from '@/components/ui';
 import type { ButtonProps, InputProps } from '@/components/ui';
 ```
 
@@ -35,7 +35,7 @@ components/ui/
   tokens/           token CSS files (see "Design tokens" below)
   core/             Button (built), Tabs, Tooltip (proposed)
   forms/            Input (built), Select (proposed)
-  feedback/         Dialog (built), Toast (proposed)
+  feedback/         Dialog (built), Toast (built)
   data/             Data Table (proposed)
 ```
 
@@ -252,11 +252,13 @@ Wraps Radix Dialog, styled to match the mockup's confirm-delete demo.
   description="This demonstrates Dialog's focus-trap and dismissal behavior." />
 ```
 
-#### `Toast`
+#### `Toast` — built
 
-Transient notification, announced via a live region.
+Transient notification, announced via a live region. Call `toast()` from any client
+handler; mount `<Toaster />` once in the root layout.
 
-- `tone` (`'neutral' | 'success' | 'danger'`) · `title` · `description` · `duration`
+- `tone` (`'neutral' | 'success' | 'danger'`, default `'neutral'`) · `title` · `description?` ·
+  `duration?` (ms, default `5000` to match Radix)
 
 ```tsx
 toast({ tone: 'success', title: 'Saved' });
@@ -284,7 +286,7 @@ Tabular data display — the most complex Phase 1 component (requirement doc §1
 | Helper | Returns | Use |
 |---|---|---|
 | `cx(...classNames)` | class string | Joins conditional class names, filtering out `false`/`null`/`undefined` — used by Button's variant/size composition |
-| `getToneClassName(tone)` | class string | Maps a `Tone` value to its token-backed background/text classes — not currently consumed (Button uses `variant`, not `tone`); kept ready for Toast |
+| `getToneClassName(tone)` | class string | Maps a `Tone` value to its token-backed background/text classes — consumed by Toast |
 
 ---
 
@@ -323,14 +325,14 @@ Testing Conventions).
 
 ## Status / gaps
 
-- **Fully styled and in use:** `Button`, `Input`, `Dialog`. "Editorial Dark" is the locked visual
+- **Fully styled and in use:** `Button`, `Input`, `Dialog`, `Toast`. "Editorial Dark" is the locked visual
   direction as of 2026-09-11 (dark-only, no light theme) — see "Design tokens" above and
   `design/Forge Prototype Editorial Dark standalone.html` for the source mockup.
 - **Screens built against the new system:** `/` (Home), `/foundations` (token showcase),
-  `/components` (Button and Input docs: Preview/Code/Accessibility tabs, via
-  `src/features/components/ButtonDoc.tsx` and `InputDoc.tsx`), `/playground` (live Button and
-  Input prop editors + Dialog demo + RHF/Zod email form, via
-  `src/features/playground/PlaygroundControls.tsx`).
+  `/components` (Button, Input, and Toast docs: Preview/Code/Accessibility tabs, via
+  `src/features/components/ButtonDoc.tsx`, `InputDoc.tsx`, and `ToastDoc.tsx`), `/playground`
+  (live Button and Input prop editors + Dialog demo + RHF/Zod email form + Toast firer, via
+  `src/features/playground/PlaygroundControls.tsx`). `Toaster` is mounted in `src/app/layout.tsx`.
 - **Not yet restyled:** `/patterns` and `/engineering` remain the original plain placeholder
   stub pages (no sidebar-shell styling applied) — out of scope for this pass since the mockup
   didn't cover those routes; restyle when their real content is built.

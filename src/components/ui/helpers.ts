@@ -7,8 +7,8 @@ export function cx(...classNames: ReadonlyArray<string | false | null | undefine
 }
 
 /**
- * Tone → className. Not consumed by any built component yet (Button uses its own `variant`
- * union — see types.ts); kept ready for Toast (requirement doc §10.4, Build Order step 8).
+ * Tone → className. Consumed by Toast (requirement doc §10.4, Build Order step 8).
+ * Button uses its own `variant` union — see types.ts.
  */
 const toneClassNames: Record<Tone, string> = {
   neutral: 'bg-[var(--color-border)] text-[var(--color-foreground)]',

@@ -3,9 +3,11 @@ import { EMAIL_INVALID_MESSAGE } from '@/validators/email.validators'
 import {
   generateButtonCode,
   generateInputCode,
+  generateToastCode,
   isButtonVariant,
   isInputTone,
   isSize,
+  isToastTone,
 } from './playgroundQuery'
 
 describe('generateButtonCode', () => {
@@ -54,6 +56,24 @@ describe('generateInputCode', () => {
   })
 })
 
+describe('generateToastCode', () => {
+  it('omits default tone and empty description', () => {
+    expect(generateToastCode({ tone: 'neutral', title: 'Saved', description: '' })).toBe(
+      "toast({ title: 'Saved' })"
+    )
+  })
+
+  it('includes tone and description when set', () => {
+    expect(
+      generateToastCode({
+        tone: 'danger',
+        title: 'Could not save',
+        description: 'Try again.',
+      })
+    ).toBe("toast({ tone: 'danger', title: 'Could not save', description: 'Try again.' })")
+  })
+})
+
 describe('playground union guards', () => {
   it('accepts known Button variants and rejects others', () => {
     expect(isButtonVariant('ghost')).toBe(true)
@@ -65,5 +85,7 @@ describe('playground union guards', () => {
     expect(isSize('xl')).toBe(false)
     expect(isInputTone('danger')).toBe(true)
     expect(isInputTone('success')).toBe(false)
+    expect(isToastTone('success')).toBe(true)
+    expect(isToastTone('brand')).toBe(false)
   })
 })
