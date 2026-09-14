@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 
 vi.mock('next/navigation', () => ({
   usePathname: () => '/components',
@@ -13,6 +13,16 @@ describe('Sidebar', () => {
     render(<Sidebar />)
 
     expect(screen.getByRole('link', { name: SITE_NAME })).toHaveAttribute('href', '/')
+  })
+
+  it('places the wordmark and phase note inside landmarks', () => {
+    render(<Sidebar />)
+
+    expect(
+      within(screen.getByRole('banner')).getByRole('link', { name: SITE_NAME })
+    ).toBeInTheDocument()
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('Phase 1')
+    expect(screen.getByRole('navigation', { name: 'Primary' })).toBeInTheDocument()
   })
 
   it('renders every top-level nav item as a link', () => {
