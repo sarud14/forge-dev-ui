@@ -5,13 +5,14 @@ vi.mock('next/navigation', () => ({
   usePathname: () => '/components',
 }))
 
+import { SITE_NAME } from '@/constants/seo'
 import { Sidebar } from './Sidebar'
 
 describe('Sidebar', () => {
   it('exposes the forge.dev wordmark as the home link', () => {
     render(<Sidebar />)
 
-    expect(screen.getByRole('link', { name: 'forge.dev' })).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: SITE_NAME })).toHaveAttribute('href', '/')
   })
 
   it('renders every top-level nav item as a link', () => {
