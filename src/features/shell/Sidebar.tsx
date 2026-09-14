@@ -29,40 +29,43 @@ export function Sidebar(): JSX.Element {
       }}
     >
       {/* Logo mark — Chevron Peak shape from design/forge-logo-directions, colored with
-          --color-brand so the lockup matches the Editorial Dark CI (teal), not a separate accent. */}
-      <Link
-        href="/"
-        aria-label={SITE_NAME}
-        style={{ display: 'flex', alignItems: 'center', gap: 10 }}
-      >
-        <svg
-          width="26"
-          height="26"
-          viewBox={LOGO_MARK.viewBox}
-          aria-hidden="true"
-          style={{ flexShrink: 0 }}
+          --color-brand so the lockup matches the Editorial Dark CI (teal), not a separate accent.
+          Wrapped in <header> so the wordmark is inside a banner landmark (axe region). */}
+      <header>
+        <Link
+          href="/"
+          aria-label={SITE_NAME}
+          style={{ display: 'flex', alignItems: 'center', gap: 10 }}
         >
-          <polygon
-            points={LOGO_MARK.backPolygonPoints}
-            fill="var(--color-brand)"
-            opacity="0.4"
-          />
-          <polygon points={LOGO_MARK.frontPolygonPoints} fill="var(--color-brand)" />
-        </svg>
-        <span
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontWeight: 700,
-            fontSize: 'var(--text-lg)',
-            letterSpacing: '-0.01em',
-            color: 'var(--color-foreground)',
-          }}
-        >
-          forge
-          <span style={{ color: 'var(--color-brand)' }}>.</span>
-          dev
-        </span>
-      </Link>
+          <svg
+            width="26"
+            height="26"
+            viewBox={LOGO_MARK.viewBox}
+            aria-hidden="true"
+            style={{ flexShrink: 0 }}
+          >
+            <polygon
+              points={LOGO_MARK.backPolygonPoints}
+              fill="var(--color-brand)"
+              opacity="0.4"
+            />
+            <polygon points={LOGO_MARK.frontPolygonPoints} fill="var(--color-brand)" />
+          </svg>
+          <span
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontWeight: 700,
+              fontSize: 'var(--text-lg)',
+              letterSpacing: '-0.01em',
+              color: 'var(--color-foreground)',
+            }}
+          >
+            forge
+            <span style={{ color: 'var(--color-brand)' }}>.</span>
+            dev
+          </span>
+        </Link>
+      </header>
 
       <nav aria-label="Primary" style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {navItems.map((item) => {
@@ -87,7 +90,7 @@ export function Sidebar(): JSX.Element {
         })}
       </nav>
 
-      <div
+      <footer
         style={{
           marginTop: 'auto',
           fontSize: 'var(--text-2xs)',
@@ -100,7 +103,7 @@ export function Sidebar(): JSX.Element {
         Phase 1
         <br />
         Foundations → Components → Patterns → Accessibility → Testing → Docs
-      </div>
+      </footer>
     </div>
   )
 }
