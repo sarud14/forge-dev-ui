@@ -1,0 +1,14 @@
+/* Base unit doubled to 8px (0.5rem) to match the mockup's own declared spaceTokens
+   (--space-1: 8px, --space-2: 16px, --space-4: 32px) — see colors.css's note on the
+   2026-09-11 Editorial Dark direction. --space-3/6/8/12/16 continue the same arithmetic
+   progression; the mockup's Foundations demo doesn't show them but nothing contradicts them. */
+:root {
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
+}

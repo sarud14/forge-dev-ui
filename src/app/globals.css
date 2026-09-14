@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+
+@import '../components/ui/tokens/colors.css';
+@import '../components/ui/tokens/spacing.css';
+@import '../components/ui/tokens/typography.css';
+@import '../components/ui/tokens/radius.css';
+@import '../components/ui/tokens/elevation.css';
+@import '../components/ui/tokens/motion.css';
+
+/* Tailwind v4 CSS-first theme — maps token custom properties to utility classes.
+   Never hardcode a raw value here or in a component; add/adjust a token above instead
+   (see AGENTS.md "Design Tokens"). */
+@theme inline {
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-primary: var(--color-primary);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-border: var(--color-border);
+  --color-brand: var(--color-brand);
+  --color-success: var(--color-success);
+  --color-danger: var(--color-danger);
+  --color-warning: var(--color-warning);
+  --color-info: var(--color-info);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-background);
+}
+
+a {
+  color: var(--color-primary);
+}
+a:hover {
+  color: var(--color-foreground);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}

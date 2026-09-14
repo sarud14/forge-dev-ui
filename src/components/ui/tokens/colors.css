@@ -1,0 +1,35 @@
+/* The only place a raw color hex is hand-written — see AGENTS.md "Design Tokens".
+   Forge is DARK-ONLY as of 2026-09-11 ("Editorial Dark" direction, design/forge-editorial-dark
+   mockup) — confirmed with Ruj; there is no light-theme variant, so this file has a single
+   :root block instead of a prefers-color-scheme override.
+
+   --color-background, --color-foreground, --color-primary, --color-muted are the four tokens
+   the mockup's own Foundations page declares as "the" token inventory (its `colorTokens` data) —
+   copied here at the exact values it specifies. --color-muted is a SURFACE tone in the mockup
+   (sidebar/card background), not muted text — kept faithful to that rather than reinterpreted.
+
+   --color-border, --color-muted-foreground and --color-brand are NOT in the mockup's own
+   4-token list but are used constantly throughout it (borders everywhere; secondary/description
+   text at ~#93a0b0, ~#8d97a8, ~#aab4c2 — three near-duplicate grays collapsed into one token
+   here, flagged to Ruj rather than silently invented). --color-danger is updated to the
+   mockup's destructive red (Button's `destructive` variant). --color-success/-warning/-info are
+   not shown in the mockup — left as prior placeholders pending a component that needs them.
+
+   The sidebar logo mark uses --color-brand (same teal as --color-primary) so the lockup
+   matches the rest of the Editorial Dark CI. The earlier amber --color-logo-accent exception
+   was retired 2026-09-11. */
+:root {
+  --color-background: #12151b;
+  --color-foreground: #eef1f5;
+  --color-primary: #45c4b0;
+  --color-muted: #1a1e26;
+
+  --color-border: #2b3140;
+  --color-muted-foreground: #93a0b0;
+  --color-brand: #45c4b0;
+
+  --color-success: #16a34a;
+  --color-danger: #b5453a;
+  --color-warning: #d97706;
+  --color-info: #0891b2;
+}

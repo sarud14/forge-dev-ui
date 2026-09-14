@@ -1,0 +1,29 @@
+/* Three-face system from the mockup — loaded via next/font/google in src/app/layout.tsx,
+   which sets --font-public-sans / --font-spectral / --font-ibm-plex-mono. See colors.css's
+   note on the 2026-09-11 Editorial Dark direction. --font-serif/--font-brand replace the
+   earlier JetBrains-Mono-as-brand decision — the wordmark is now set in Spectral, not mono. */
+:root {
+  --font-sans: var(--font-public-sans), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-spectral), Georgia, serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  --font-brand: var(--font-serif);
+
+  /* Sizes are the exact literal pixel values used across the mockup (eyebrow labels, nav,
+     card titles, hero H1, ...) — not snapped to a rounder scale; see radius.css's note on
+     why token fidelity to the source can still mean normalizing a genuine inconsistency,
+     which isn't the case here since these values are used consistently. */
+  --text-2xs: 0.6875rem;  /* 11px — micro labels (space/radius token names, sidebar footer) */
+  --text-xs: 0.75rem;     /* 12px — uppercase eyebrow labels, color token labels, nav items */
+  --text-sm: 0.8125rem;   /* 13px — buttons, tabs, code blocks */
+  --text-base: 0.875rem;  /* 14px — descriptions, a11y panel copy */
+  --text-md: 0.9375rem;   /* 15px — home intro paragraph */
+  --text-lg: 1.1875rem;   /* 19px — card titles, dialog title */
+  --text-xl: 1.25rem;     /* 20px — sidebar wordmark */
+  --text-2xl: 2.125rem;   /* 34px — subpage H1 (Foundations, Components, Playground) */
+  --text-3xl: 3rem;       /* 48px — home hero H1 */
+
+  --leading-tight: 1.15;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.75;
+  --leading-loose: 2;
+}

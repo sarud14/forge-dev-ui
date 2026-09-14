@@ -1,0 +1,11 @@
+/* Matches the mockup's own declared radiusTokens (--radius-sm: 6px, --radius-md: 10px,
+   --radius-lg: 16px) exactly — see colors.css's note. Button's own inline radius map (6/9/10)
+   doesn't line up with this scale (lg comes out equal to --radius-md); components consume this
+   scale rather than a parallel one-off number, per AGENTS.md's Design Tokens rule, so Button
+   maps its lg size to --radius-lg (16px) rather than the mockup's literal 10px — flagged to
+   Ruj as a deliberate normalization, not an oversight. */
+:root {
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+}
