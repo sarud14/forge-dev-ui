@@ -4,7 +4,7 @@ import { Public_Sans, Spectral, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import { env } from '@/env'
 import { SITE_DESCRIPTION } from '@/constants/seo'
-import { Toaster } from '@/components/ui'
+import { Toaster, TooltipProvider, DEFAULT_TOOLTIP_DELAY_MS } from '@/components/ui'
 import { Sidebar } from '@/features/shell/Sidebar'
 import { buildSiteMetadata, buildWebSiteJsonLd } from '@/lib/seo/siteMetadata'
 
@@ -43,11 +43,13 @@ export default function RootLayout({ children }: { children: ReactNode }): JSX.E
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
         />
-        <div style={{ display: 'flex', minHeight: '100vh', width: '100%' }}>
-          <Sidebar />
-          <main style={{ flex: 1, minWidth: 0, overflow: 'auto' }}>{children}</main>
-        </div>
-        <Toaster />
+        <TooltipProvider delayDuration={DEFAULT_TOOLTIP_DELAY_MS}>
+          <div style={{ display: 'flex', minHeight: '100vh', width: '100%' }}>
+            <Sidebar />
+            <main style={{ flex: 1, minWidth: 0, overflow: 'auto' }}>{children}</main>
+          </div>
+          <Toaster />
+        </TooltipProvider>
       </body>
     </html>
   )

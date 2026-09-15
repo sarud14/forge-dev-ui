@@ -2,7 +2,10 @@ import type { Metadata } from 'next'
 import type { JSX } from 'react'
 import { ButtonDoc } from '@/features/components/ButtonDoc'
 import { InputDoc } from '@/features/components/InputDoc'
+import { SelectDoc } from '@/features/components/SelectDoc'
+import { TabsDoc } from '@/features/components/TabsDoc'
 import { ToastDoc } from '@/features/components/ToastDoc'
+import { TooltipDoc } from '@/features/components/TooltipDoc'
 
 export const metadata: Metadata = { title: 'Components' }
 
@@ -41,7 +44,7 @@ export default function ComponentsPage(): JSX.Element {
         }}
       >
         Production-quality primitives with documented states, accessibility notes, and live
-        previews. Phase 1 currently ships Button, Input, Dialog, and Toast.
+        previews. Phase 1 currently ships Button, Input, Select, Tabs, Tooltip, Dialog, and Toast.
       </p>
 
       <section aria-labelledby="components-button-heading" style={{ marginBottom: 'var(--space-8)' }}>
@@ -96,6 +99,87 @@ export default function ComponentsPage(): JSX.Element {
           bind through standard input props — Input does not import either library.
         </p>
         <InputDoc />
+      </section>
+
+      <section aria-labelledby="components-select-heading" style={{ marginBottom: 'var(--space-8)' }}>
+        <h2
+          id="components-select-heading"
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'var(--text-lg)',
+            fontWeight: 600,
+            margin: '0 0 var(--space-2)',
+          }}
+        >
+          Select
+        </h2>
+        <p
+          style={{
+            fontSize: 'var(--text-base)',
+            color: 'var(--color-muted-foreground)',
+            lineHeight: 'var(--leading-relaxed)',
+            maxWidth: 600,
+            margin: '0 0 var(--space-6)',
+          }}
+        >
+          Composed Radix combobox. Pass <code>options</code>, not a hand-assembled Trigger/Content
+          tree. Keyboard, typeahead, and listbox roles come from Radix.
+        </p>
+        <SelectDoc />
+      </section>
+
+      <section aria-labelledby="components-tabs-heading" style={{ marginBottom: 'var(--space-8)' }}>
+        <h2
+          id="components-tabs-heading"
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'var(--text-lg)',
+            fontWeight: 600,
+            margin: '0 0 var(--space-2)',
+          }}
+        >
+          Tabs
+        </h2>
+        <p
+          style={{
+            fontSize: 'var(--text-base)',
+            color: 'var(--color-muted-foreground)',
+            lineHeight: 'var(--leading-relaxed)',
+            maxWidth: 600,
+            margin: '0 0 var(--space-6)',
+          }}
+        >
+          Composed Radix tabs. Pass <code>items</code> with value, label, and panel content. Arrow
+          keys, Home, and End move between tabs.
+        </p>
+        <TabsDoc />
+      </section>
+
+      <section aria-labelledby="components-tooltip-heading" style={{ marginBottom: 'var(--space-8)' }}>
+        <h2
+          id="components-tooltip-heading"
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'var(--text-lg)',
+            fontWeight: 600,
+            margin: '0 0 var(--space-2)',
+          }}
+        >
+          Tooltip
+        </h2>
+        <p
+          style={{
+            fontSize: 'var(--text-base)',
+            color: 'var(--color-muted-foreground)',
+            lineHeight: 'var(--leading-relaxed)',
+            maxWidth: 600,
+            margin: '0 0 var(--space-6)',
+          }}
+        >
+          Supplementary label on hover and focus. Mount <code>TooltipProvider</code> once in the
+          root layout. Dismisses on Escape.
+        </p>
+        <TooltipDoc />
       </section>
 
       <section aria-labelledby="components-toast-heading">

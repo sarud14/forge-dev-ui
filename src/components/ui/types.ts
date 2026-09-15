@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from 'react'
+import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactElement, ReactNode } from 'react'
 
 /** Every shared prop interface/union for the design system lives here — never inline. */
 export type Size = 'sm' | 'md' | 'lg'
@@ -18,6 +18,43 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   readonly isLoading?: boolean
 }
 
+export interface TabsItem {
+  readonly value: string
+  readonly label: string
+  readonly content: ReactNode
+  readonly disabled?: boolean
+}
+
+/**
+ * Composed Radix Tabs. `items` is the Phase 1 API so callers do not assemble Trigger/Content
+ * by hand (same shape as Select's `options`). `aria-label` names the tablist.
+ */
+export interface TabsProps {
+  readonly items: readonly TabsItem[]
+  readonly defaultValue?: string
+  readonly value?: string
+  readonly onValueChange?: (value: string) => void
+  readonly 'aria-label'?: string
+}
+
+export type TooltipSide = 'top' | 'right' | 'bottom' | 'left'
+
+export interface TooltipProps {
+  readonly children: ReactElement
+  readonly content: ReactNode
+  readonly side?: TooltipSide
+  readonly delayDuration?: number
+  readonly open?: boolean
+  readonly defaultOpen?: boolean
+  readonly onOpenChange?: (open: boolean) => void
+}
+
+export interface TooltipProviderProps {
+  readonly children: ReactNode
+  readonly delayDuration?: number
+  readonly skipDelayDuration?: number
+}
+
 /** Input only ships `md` in Phase 1 — the union is closed so a later size is an explicit API change. */
 export type InputSize = Extract<Size, 'md'>
 
@@ -33,6 +70,27 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   readonly size?: InputSize
   readonly tone?: InputTone
   readonly errorMessage?: string
+}
+
+export interface SelectOption {
+  readonly value: string
+  readonly label: string
+  readonly disabled?: boolean
+}
+
+/**
+ * Composed Radix Select. `aria-label` names the combobox when there is no visible <label>.
+ * `placeholder` is shown while no value is selected.
+ */
+export interface SelectProps {
+  readonly options: readonly SelectOption[]
+  readonly value?: string
+  readonly defaultValue?: string
+  readonly onValueChange?: (value: string) => void
+  readonly disabled?: boolean
+  readonly placeholder?: string
+  readonly 'aria-label'?: string
+  readonly name?: string
 }
 
 export interface DialogProps {
