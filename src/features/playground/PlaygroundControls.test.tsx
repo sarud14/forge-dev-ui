@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Toaster, TooltipProvider, clearToasts } from '@/components/ui'
+import { Toaster, TooltipProvider, clearToasts, DEFAULT_EMPTY_STATE } from '@/components/ui'
 import { PlaygroundControls } from './PlaygroundControls'
 
 function renderPlayground(): void {
@@ -34,6 +34,10 @@ describe('PlaygroundControls', () => {
     expect(screen.getByText('<Tabs value="usage" items={tabItems} />')).toBeInTheDocument()
     expect(
       screen.getByText('<Tooltip content="Copy to clipboard"><Button>Hover me</Button></Tooltip>')
+    ).toBeInTheDocument()
+    expect(screen.getByRole('table', { name: 'Playground components' })).toBeInTheDocument()
+    expect(
+      screen.getByText('<DataTable columns={columns} data={rows} getRowId={(row) => row.id} />')
     ).toBeInTheDocument()
   })
 
@@ -146,6 +150,18 @@ describe('PlaygroundControls', () => {
       screen.getByText(
         '<Tooltip content="On the right" side="right"><Button>Hover me</Button></Tooltip>'
       )
+    ).toBeInTheDocument()
+  })
+
+  it('toggles the Data Table empty state into the preview and generated code', async () => {
+    const user = userEvent.setup()
+    renderPlayground()
+
+    await user.click(screen.getByLabelText('Empty state'))
+
+    expect(screen.getByText(DEFAULT_EMPTY_STATE)).toBeInTheDocument()
+    expect(
+      screen.getByText('<DataTable columns={columns} data={[]} getRowId={(row) => row.id} />')
     ).toBeInTheDocument()
   })
 })

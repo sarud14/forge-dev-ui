@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { JSX } from 'react'
 import { ButtonDoc } from '@/features/components/ButtonDoc'
+import { DataTableDoc } from '@/features/components/DataTableDoc'
 import { InputDoc } from '@/features/components/InputDoc'
 import { SelectDoc } from '@/features/components/SelectDoc'
 import { TabsDoc } from '@/features/components/TabsDoc'
@@ -44,7 +45,8 @@ export default function ComponentsPage(): JSX.Element {
         }}
       >
         Production-quality primitives with documented states, accessibility notes, and live
-        previews. Phase 1 currently ships Button, Input, Select, Tabs, Tooltip, Dialog, and Toast.
+        previews. Phase 1 currently ships Button, Input, Select, Tabs, Tooltip, Dialog, Toast, and
+        Data Table.
       </p>
 
       <section aria-labelledby="components-button-heading" style={{ marginBottom: 'var(--space-8)' }}>
@@ -182,7 +184,7 @@ export default function ComponentsPage(): JSX.Element {
         <TooltipDoc />
       </section>
 
-      <section aria-labelledby="components-toast-heading">
+      <section aria-labelledby="components-toast-heading" style={{ marginBottom: 'var(--space-8)' }}>
         <h2
           id="components-toast-heading"
           style={{
@@ -207,6 +209,33 @@ export default function ComponentsPage(): JSX.Element {
           Mount <code>Toaster</code> once in the root layout.
         </p>
         <ToastDoc />
+      </section>
+
+      <section aria-labelledby="components-table-heading">
+        <h2
+          id="components-table-heading"
+          style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'var(--text-lg)',
+            fontWeight: 600,
+            margin: '0 0 var(--space-2)',
+          }}
+        >
+          Data Table
+        </h2>
+        <p
+          style={{
+            fontSize: 'var(--text-base)',
+            color: 'var(--color-muted-foreground)',
+            lineHeight: 'var(--leading-relaxed)',
+            maxWidth: 600,
+            margin: '0 0 var(--space-6)',
+          }}
+        >
+          Tabular data with per-column sort. Sortable headers are real buttons with accessible
+          names; <code>aria-sort</code> exposes the current direction.
+        </p>
+        <DataTableDoc />
       </section>
     </div>
   )

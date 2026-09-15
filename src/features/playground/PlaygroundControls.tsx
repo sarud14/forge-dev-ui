@@ -1,12 +1,20 @@
 'use client'
 
 import { useState, type ChangeEvent, type JSX } from 'react'
-import { Button, Dialog, Input, Select, Tabs, Tooltip, toast } from '@/components/ui'
-import type { ButtonVariant, InputTone, Size, ToastTone, TooltipSide } from '@/components/ui'
+import { Button, DataTable, Dialog, Input, Select, Tabs, Tooltip, toast } from '@/components/ui'
+import type {
+  ButtonVariant,
+  DataTableColumn,
+  InputTone,
+  Size,
+  ToastTone,
+  TooltipSide,
+} from '@/components/ui'
 import {
   BUTTON_VARIANTS,
   EMAIL_INVALID_MESSAGE,
   generateButtonCode,
+  generateDataTableCode,
   generateInputCode,
   generateSelectCode,
   generateTabsCode,
@@ -19,11 +27,13 @@ import {
   isSize,
   isToastTone,
   isTooltipSide,
+  PLAYGROUND_TABLE_ROWS,
   SELECT_SIZE_OPTIONS,
   SIZES,
   TAB_VALUES,
   TOAST_TONES,
   TOOLTIP_SIDES,
+  type PlaygroundTableRow,
   type PlaygroundTabValue,
 } from './playgroundQuery'
 import { PlaygroundEmailForm } from './PlaygroundEmailForm'
@@ -32,6 +42,30 @@ const playgroundTabItems = [
   { value: 'usage', label: 'Usage', content: 'Pass items with value, label, and content.' },
   { value: 'a11y', label: 'Accessibility', content: 'Arrow keys move between tabs.' },
 ] as const
+
+const playgroundTableColumns: readonly DataTableColumn<PlaygroundTableRow>[] = [
+  {
+    id: 'name',
+    header: 'Name',
+    cell: (row) => row.name,
+    sortable: true,
+    sortValue: (row) => row.name,
+  },
+  {
+    id: 'status',
+    header: 'Status',
+    cell: (row) => row.status,
+    sortable: true,
+    sortValue: (row) => row.status,
+  },
+  {
+    id: 'count',
+    header: 'Count',
+    cell: (row) => String(row.count),
+    sortable: true,
+    sortValue: (row) => row.count,
+  },
+]
 
 /**
  * Interactive playground for Phase 1 primitives: adjust props, read the generated code,
@@ -55,6 +89,7 @@ export function PlaygroundControls(): JSX.Element {
   const [tabValue, setTabValue] = useState<PlaygroundTabValue>('usage')
   const [tooltipSide, setTooltipSide] = useState<TooltipSide>('top')
   const [tooltipContent, setTooltipContent] = useState('Copy to clipboard')
+  const [tableIsEmpty, setTableIsEmpty] = useState(false)
 
   const inputErrorMessage = showError ? EMAIL_INVALID_MESSAGE : undefined
 
@@ -462,6 +497,34 @@ export function PlaygroundControls(): JSX.Element {
           <pre style={preStyle}>
             {generateTooltipCode({ content: tooltipContent, side: tooltipSide })}
           </pre>
+        </div>
+      </section>
+
+      <section aria-labelledby="playground-table-heading">
+        <h2 id="playground-table-heading" style={sectionHeadingStyle}>
+          Data Table
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+          <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <input
+              type="checkbox"
+              checked={tableIsEmpty}
+              onChange={(event) => setTableIsEmpty(event.target.checked)}
+            />
+            Empty state
+          </label>
+
+          <div>
+            <DataTable
+              aria-label="Playground components"
+              columns={playgroundTableColumns}
+              data={tableIsEmpty ? [] : PLAYGROUND_TABLE_ROWS}
+              getRowId={(row) => row.id}
+            />
+            <pre style={{ ...preStyle, marginTop: 'var(--space-4)' }}>
+              {generateDataTableCode({ isEmpty: tableIsEmpty })}
+            </pre>
+          </div>
         </div>
       </section>
     </div>

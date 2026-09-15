@@ -282,7 +282,7 @@ one is actually built (requirement doc §11 Build Order steps 7-10). -->
 - `Toast` → announced via a live region so it does not require the user to be looking at the
   screen when it appears.
 - `Data Table` → sortable/interactive headers are real buttons with accessible names, not
-  divs with click handlers.
+  divs with click handlers. `aria-sort` exposes the current direction.
 
 Full conformance to any accessibility standard cannot be claimed from automated checks alone —
 assistive-technology testing and expert review are still required before that claim is made.
