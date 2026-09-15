@@ -13,6 +13,8 @@ describe('ComponentDocArticle', () => {
 Use Button for actions.
 `}
         preview={<div>Live preview</div>}
+        backHref="/components"
+        backLabel="← Components"
       />
     )
 

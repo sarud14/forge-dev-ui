@@ -15,3 +15,10 @@ test('component doc page renders MDX body and a live preview', async ({ page }) 
   await expect(page.getByRole('heading', { name: 'When to use' })).toBeVisible()
   await expect(page.getByRole('tablist', { name: 'Button documentation' })).toBeVisible()
 })
+
+test('pattern doc page renders MDX body and a composed preview', async ({ page }) => {
+  await page.goto('/patterns/form')
+  await expect(page.getByRole('heading', { level: 1, name: 'Form' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'When to use' })).toBeVisible()
+  await expect(page.getByRole('textbox', { name: 'Email' })).toBeVisible()
+})
