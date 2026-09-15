@@ -1,0 +1,18 @@
+---
+slug: principles
+title: Principles
+summary: Fewer primitives, tokens as the visual source of truth, and documented states — not a gallery of one-off widgets.
+order: 1
+---
+
+## Stance
+
+Forge is a frontend system. A component that cannot explain when to use it, what states it has, or how it behaves on a keyboard is unfinished.
+
+## Rules
+
+- Visual values are tokens. A hex or pixel literal inside a component is a bug unless it is documenting the token itself.
+- Editorial Dark is the only theme. Do not add a light palette or a `prefers-color-scheme` branch.
+- Prefer composition over a new variant. If two screens need the same control, they share a primitive.
+- Ship the edge states with the default: disabled, loading, empty, error, focus.
+- Accessibility is part of the API — names, roles, and `aria-*` — not a stylesheet afterthought.

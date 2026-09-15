@@ -367,7 +367,8 @@ Testing Conventions).
   "Editorial Dark" is the locked visual
   direction as of 2026-09-11 (dark-only, no light theme) — see "Design tokens" above and
   `design/Forge Prototype Editorial Dark standalone.html` for the source mockup.
-- **Screens built against the new system:** `/` (Home), `/foundations` (token showcase),
+- **Screens built against the new system:** `/` (Home), `/foundations` and `/foundations/[slug]`
+  (MDX from `content/foundations/*.mdx` plus token/layout swatches via `FoundationPreview`),
   `/components` (index driven by `getComponentDocs()` — Button, Input, Select, Tabs, Tooltip,
   Dialog, Toast, and Data Table, each with Preview/Code/Accessibility tabs via
   `src/features/components/*Doc.tsx`), `/components/[slug]` (MDX body from
@@ -377,8 +378,7 @@ Testing Conventions).
   (live Button, Input, Select, Tabs, Tooltip, Data Table prop editors + Dialog demo + RHF/Zod
   email form + Toast firer, via `src/features/playground/PlaygroundControls.tsx`). `Toaster` and
   `TooltipProvider` are mounted in `src/app/layout.tsx`.
-- **Not yet restyled:** N/A — `/foundations/[slug]` is still the remaining documentation gap
-  (token showcase lives on `/foundations` today).
+- **Not yet restyled:** N/A
 - **Available, not yet used by any screen:** N/A
 - **Ported but not yet finished:** N/A — nothing is ported; everything is hand-built per
   requirement doc §3.3.

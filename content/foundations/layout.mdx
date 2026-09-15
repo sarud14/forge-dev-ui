@@ -1,0 +1,22 @@
+---
+slug: layout
+title: Layout
+summary: Five named viewport stops. The shell keeps a persistent sidebar from the laptop stop up; below that it is a Menu drawer.
+order: 3
+---
+
+## Breakpoints
+
+Stops are named for the device class, not Tailwind's default `sm`/`md`/`lg`. Layout is mobile-first. `matchMedia` cannot read CSS custom properties, so `BREAKPOINTS` in `@/components/ui` duplicates the pixel values for the shell.
+
+## Shell
+
+- `--bp-phone-sm` compact phone
+- `--bp-phone-lg` Pro Max-class phone
+- `--bp-tablet` tablet
+- `--bp-laptop` persistent sidebar
+- `--bp-desktop` desktop
+
+## Content widths
+
+`--size-sidebar`, `--size-dialog`, `--size-content`, `--size-content-wide`, and `--size-playground-rail` are the layout sizes. Page frames and the playground split consume those tokens rather than inventing another max-width.

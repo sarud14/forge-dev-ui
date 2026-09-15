@@ -1,0 +1,18 @@
+---
+slug: tokens
+title: Tokens
+summary: CSS custom properties in `src/components/ui/tokens` are the only place raw color, space, radius, and type values are written.
+order: 2
+---
+
+## Source of truth
+
+Token files are split by concern: color, spacing, radius, typography, breakpoints, elevation, motion. Tailwind maps utilities onto those custom properties. A class like `bg-background` and a `var(--color-background)` reference resolve to the same value.
+
+## How to change a value
+
+Edit the token file. If a new utility class is needed, map it in the Tailwind theme next. Do not patch a component with an arbitrary `text-[13px]` or `bg-[#fdeaec]` — if the value repeats, it belongs in the token set.
+
+## Inventory
+
+The swatches below are the live tokens, not a second palette. Success, warning, and info exist as placeholders until a screen needs them. Elevation and motion files are still empty.

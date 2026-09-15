@@ -2,10 +2,13 @@ import { describe, expect, it } from 'vitest'
 import {
   componentDocHref,
   engineeringDocHref,
+  foundationDocHref,
   getComponentDoc,
   getComponentDocs,
   getEngineeringDoc,
   getEngineeringDocs,
+  getFoundationDoc,
+  getFoundationDocs,
   getPatternDoc,
   getPatternDocs,
   patternDocHref,
@@ -114,5 +117,33 @@ describe('getEngineeringDoc', () => {
   it('returns null for an unknown or unsafe slug', async () => {
     expect(await getEngineeringDoc('not-a-guide')).toBeNull()
     expect(await getEngineeringDoc('../testing')).toBeNull()
+  })
+})
+
+describe('getFoundationDocs', () => {
+  it('returns the Phase 1 foundation set in frontmatter order', async () => {
+    const docs = await getFoundationDocs()
+
+    expect(docs.map((doc) => doc.slug)).toEqual(['principles', 'tokens', 'layout'])
+  })
+})
+
+describe('foundationDocHref', () => {
+  it('builds the per-slug foundation path', () => {
+    expect(foundationDocHref('tokens')).toBe('/foundations/tokens')
+  })
+})
+
+describe('getFoundationDoc', () => {
+  it('returns the body for a known slug', async () => {
+    const doc = await getFoundationDoc('principles')
+
+    expect(doc?.title).toBe('Principles')
+    expect(doc?.body).toContain('Stance')
+  })
+
+  it('returns null for an unknown or unsafe slug', async () => {
+    expect(await getFoundationDoc('not-a-foundation')).toBeNull()
+    expect(await getFoundationDoc('../tokens')).toBeNull()
   })
 })
