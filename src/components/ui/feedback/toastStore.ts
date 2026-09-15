@@ -9,6 +9,12 @@ let nextId = 0
 let toasts: readonly ToastRecord[] = []
 const listeners = new Set<Listener>()
 
+/**
+ * Stable empty snapshot for `useSyncExternalStore`'s server getter. Returning a fresh `[]`
+ * each call makes React 19 loop (`getServerSnapshot should be cached`).
+ */
+const EMPTY_TOASTS: readonly ToastRecord[] = []
+
 function emit(): void {
   for (const listener of listeners) {
     listener()
@@ -27,7 +33,7 @@ export function getToastsSnapshot(): readonly ToastRecord[] {
 }
 
 export function getToastsServerSnapshot(): readonly ToastRecord[] {
-  return []
+  return EMPTY_TOASTS
 }
 
 /**
