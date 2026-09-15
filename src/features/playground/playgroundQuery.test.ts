@@ -3,11 +3,16 @@ import { EMAIL_INVALID_MESSAGE } from '@/validators/email.validators'
 import {
   generateButtonCode,
   generateInputCode,
+  generateSelectCode,
+  generateTabsCode,
   generateToastCode,
+  generateTooltipCode,
   isButtonVariant,
   isInputTone,
+  isPlaygroundTabValue,
   isSize,
   isToastTone,
+  isTooltipSide,
 } from './playgroundQuery'
 
 describe('generateButtonCode', () => {
@@ -87,5 +92,43 @@ describe('playground union guards', () => {
     expect(isInputTone('success')).toBe(false)
     expect(isToastTone('success')).toBe(true)
     expect(isToastTone('brand')).toBe(false)
+    expect(isTooltipSide('right')).toBe(true)
+    expect(isTooltipSide('start')).toBe(false)
+    expect(isPlaygroundTabValue('usage')).toBe(true)
+    expect(isPlaygroundTabValue('preview')).toBe(false)
+  })
+})
+
+describe('generateSelectCode', () => {
+  it('includes the selected value and omits disabled by default', () => {
+    expect(generateSelectCode({ value: 'md', disabled: false })).toBe(
+      '<Select aria-label="Select size" options={sizeOptions} value="md" />'
+    )
+  })
+
+  it('includes disabled when set', () => {
+    expect(generateSelectCode({ value: 'lg', disabled: true })).toBe(
+      '<Select aria-label="Select size" options={sizeOptions} value="lg" disabled />'
+    )
+  })
+})
+
+describe('generateTabsCode', () => {
+  it('emits the controlled value', () => {
+    expect(generateTabsCode({ value: 'a11y' })).toBe('<Tabs value="a11y" items={tabItems} />')
+  })
+})
+
+describe('generateTooltipCode', () => {
+  it('omits default side', () => {
+    expect(generateTooltipCode({ content: 'Copy to clipboard', side: 'top' })).toBe(
+      '<Tooltip content="Copy to clipboard"><Button>Hover me</Button></Tooltip>'
+    )
+  })
+
+  it('includes a non-default side', () => {
+    expect(generateTooltipCode({ content: 'On the right', side: 'right' })).toBe(
+      '<Tooltip content="On the right" side="right"><Button>Hover me</Button></Tooltip>'
+    )
   })
 })

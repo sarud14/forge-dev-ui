@@ -1,10 +1,19 @@
-import type { ButtonVariant, InputTone, Size, ToastTone } from '@/components/ui'
+import type { ButtonVariant, InputTone, SelectOption, Size, ToastTone, TooltipSide } from '@/components/ui'
 import { EMAIL_INVALID_MESSAGE } from '@/validators/email.validators'
 
 const BUTTON_VARIANTS: readonly ButtonVariant[] = ['primary', 'secondary', 'ghost', 'destructive']
 const SIZES: readonly Size[] = ['sm', 'md', 'lg']
 const INPUT_TONES: readonly InputTone[] = ['neutral', 'danger']
 const TOAST_TONES: readonly ToastTone[] = ['neutral', 'success', 'danger']
+const TOOLTIP_SIDES: readonly TooltipSide[] = ['top', 'right', 'bottom', 'left']
+const TAB_VALUES = ['usage', 'a11y'] as const
+const SELECT_SIZE_OPTIONS: readonly SelectOption[] = [
+  { value: 'sm', label: 'Small' },
+  { value: 'md', label: 'Medium' },
+  { value: 'lg', label: 'Large' },
+]
+
+export type PlaygroundTabValue = (typeof TAB_VALUES)[number]
 
 export function isButtonVariant(value: string): value is ButtonVariant {
   return BUTTON_VARIANTS.some((variant) => variant === value)
@@ -20,6 +29,14 @@ export function isInputTone(value: string): value is InputTone {
 
 export function isToastTone(value: string): value is ToastTone {
   return TOAST_TONES.some((tone) => tone === value)
+}
+
+export function isTooltipSide(value: string): value is TooltipSide {
+  return TOOLTIP_SIDES.some((side) => side === value)
+}
+
+export function isPlaygroundTabValue(value: string): value is PlaygroundTabValue {
+  return TAB_VALUES.some((tab) => tab === value)
 }
 
 export function generateButtonCode(props: {
@@ -69,4 +86,43 @@ export function generateToastCode(props: {
   return `toast({ ${fields.join(', ')} })`
 }
 
-export { BUTTON_VARIANTS, SIZES, INPUT_TONES, TOAST_TONES, EMAIL_INVALID_MESSAGE }
+export function generateSelectCode(props: {
+  readonly value: string
+  readonly disabled: boolean
+}): string {
+  const attrs = [
+    'aria-label="Select size"',
+    'options={sizeOptions}',
+    `value="${props.value}"`,
+    props.disabled ? 'disabled' : null,
+  ].filter((attr): attr is string => attr !== null)
+
+  return `<Select ${attrs.join(' ')} />`
+}
+
+export function generateTabsCode(props: { readonly value: string }): string {
+  return `<Tabs value="${props.value}" items={tabItems} />`
+}
+
+export function generateTooltipCode(props: {
+  readonly content: string
+  readonly side: TooltipSide
+}): string {
+  const attrs = [
+    `content="${props.content}"`,
+    props.side !== 'top' ? `side="${props.side}"` : null,
+  ].filter((attr): attr is string => attr !== null)
+
+  return `<Tooltip ${attrs.join(' ')}><Button>Hover me</Button></Tooltip>`
+}
+
+export {
+  BUTTON_VARIANTS,
+  SIZES,
+  INPUT_TONES,
+  TOAST_TONES,
+  TOOLTIP_SIDES,
+  TAB_VALUES,
+  SELECT_SIZE_OPTIONS,
+  EMAIL_INVALID_MESSAGE,
+}

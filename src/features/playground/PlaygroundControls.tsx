@@ -1,26 +1,40 @@
 'use client'
 
 import { useState, type ChangeEvent, type JSX } from 'react'
-import { Button, Dialog, Input, toast } from '@/components/ui'
-import type { ButtonVariant, InputTone, Size, ToastTone } from '@/components/ui'
+import { Button, Dialog, Input, Select, Tabs, Tooltip, toast } from '@/components/ui'
+import type { ButtonVariant, InputTone, Size, ToastTone, TooltipSide } from '@/components/ui'
 import {
   BUTTON_VARIANTS,
   EMAIL_INVALID_MESSAGE,
   generateButtonCode,
   generateInputCode,
+  generateSelectCode,
+  generateTabsCode,
   generateToastCode,
+  generateTooltipCode,
   INPUT_TONES,
   isButtonVariant,
   isInputTone,
+  isPlaygroundTabValue,
   isSize,
   isToastTone,
+  isTooltipSide,
+  SELECT_SIZE_OPTIONS,
   SIZES,
+  TAB_VALUES,
   TOAST_TONES,
+  TOOLTIP_SIDES,
+  type PlaygroundTabValue,
 } from './playgroundQuery'
 import { PlaygroundEmailForm } from './PlaygroundEmailForm'
 
+const playgroundTabItems = [
+  { value: 'usage', label: 'Usage', content: 'Pass items with value, label, and content.' },
+  { value: 'a11y', label: 'Accessibility', content: 'Arrow keys move between tabs.' },
+] as const
+
 /**
- * Interactive Button, Input, and Toast playground: adjust props, read the generated code,
+ * Interactive playground for Phase 1 primitives: adjust props, read the generated code,
  * see it change live (requirement/forge-requirements.md — Playground route). Client component for
  * the same reason as ButtonDoc — the whole point is live prop manipulation.
  */
@@ -36,6 +50,11 @@ export function PlaygroundControls(): JSX.Element {
   const [toastTone, setToastTone] = useState<ToastTone>('success')
   const [toastTitle, setToastTitle] = useState('Saved')
   const [toastDescription, setToastDescription] = useState('')
+  const [selectValue, setSelectValue] = useState('md')
+  const [selectDisabled, setSelectDisabled] = useState(false)
+  const [tabValue, setTabValue] = useState<PlaygroundTabValue>('usage')
+  const [tooltipSide, setTooltipSide] = useState<TooltipSide>('top')
+  const [tooltipContent, setTooltipContent] = useState('Copy to clipboard')
 
   const inputErrorMessage = showError ? EMAIL_INVALID_MESSAGE : undefined
 
@@ -64,6 +83,22 @@ export function PlaygroundControls(): JSX.Element {
   function handleToastToneChange(event: ChangeEvent<HTMLSelectElement>): void {
     if (isToastTone(event.target.value)) {
       setToastTone(event.target.value)
+    }
+  }
+
+  function handleSelectValueChange(value: string): void {
+    setSelectValue(value)
+  }
+
+  function handleTabValueChange(value: string): void {
+    if (isPlaygroundTabValue(value)) {
+      setTabValue(value)
+    }
+  }
+
+  function handleTooltipSideChange(event: ChangeEvent<HTMLSelectElement>): void {
+    if (isTooltipSide(event.target.value)) {
+      setTooltipSide(event.target.value)
     }
   }
 
@@ -314,6 +349,118 @@ export function PlaygroundControls(): JSX.Element {
               title: toastTitle,
               description: toastDescription,
             })}
+          </pre>
+        </div>
+      </section>
+
+      <section aria-labelledby="playground-select-heading">
+        <h2 id="playground-select-heading" style={sectionHeadingStyle}>
+          Select
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <Select
+              aria-label="Select size"
+              options={SELECT_SIZE_OPTIONS}
+              value={selectValue}
+              onValueChange={handleSelectValueChange}
+              disabled={selectDisabled}
+            />
+            <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <input
+                type="checkbox"
+                checked={selectDisabled}
+                onChange={(event) => setSelectDisabled(event.target.checked)}
+              />
+              Select disabled
+            </label>
+          </div>
+
+          <pre style={preStyle}>
+            {generateSelectCode({ value: selectValue, disabled: selectDisabled })}
+          </pre>
+        </div>
+      </section>
+
+      <section aria-labelledby="playground-tabs-heading">
+        <h2 id="playground-tabs-heading" style={sectionHeadingStyle}>
+          Tabs
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+          <div>
+            <label htmlFor="playground-tab-value" style={labelStyle}>
+              Active tab
+            </label>
+            <select
+              id="playground-tab-value"
+              value={tabValue}
+              onChange={(event) => handleTabValueChange(event.target.value)}
+              style={fieldStyle}
+            >
+              {TAB_VALUES.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <Tabs
+              aria-label="Playground example"
+              items={playgroundTabItems}
+              value={tabValue}
+              onValueChange={handleTabValueChange}
+            />
+            <pre style={{ ...preStyle, marginTop: 'var(--space-4)' }}>{generateTabsCode({ value: tabValue })}</pre>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="playground-tooltip-heading">
+        <h2 id="playground-tooltip-heading" style={sectionHeadingStyle}>
+          Tooltip
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <div>
+              <label htmlFor="playground-tooltip-side" style={labelStyle}>
+                Side
+              </label>
+              <select
+                id="playground-tooltip-side"
+                value={tooltipSide}
+                onChange={handleTooltipSideChange}
+                style={fieldStyle}
+              >
+                {TOOLTIP_SIDES.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="playground-tooltip-content" style={labelStyle}>
+                Content
+              </label>
+              <input
+                id="playground-tooltip-content"
+                type="text"
+                value={tooltipContent}
+                onChange={(event) => setTooltipContent(event.target.value)}
+                style={fieldStyle}
+              />
+            </div>
+
+            <Tooltip content={tooltipContent} side={tooltipSide} delayDuration={0}>
+              <Button variant="secondary">Hover me</Button>
+            </Tooltip>
+          </div>
+
+          <pre style={preStyle}>
+            {generateTooltipCode({ content: tooltipContent, side: tooltipSide })}
           </pre>
         </div>
       </section>

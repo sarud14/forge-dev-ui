@@ -27,7 +27,7 @@ export default function PlaygroundPage(): JSX.Element {
           margin: '0 0 var(--space-2)',
         }}
       >
-        Try Button, Input, and Toast
+        Try Button, Input, Select, Tabs, Tooltip, and Toast
       </h1>
       <p
         style={{
@@ -41,6 +41,7 @@ export default function PlaygroundPage(): JSX.Element {
         Adjust props on the left, read the generated code, and see the result live. Input also
         has a React Hook Form + Zod email demo so validation is composed onto the primitive,
         not baked into it. Toast is fired with <code>toast()</code> into the app-wide live region.
+        Tooltip uses <code>delayDuration=0</code> here so the preview appears immediately.
       </p>
 
       <PlaygroundControls />

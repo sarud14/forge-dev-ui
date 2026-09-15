@@ -275,8 +275,10 @@ one is actually built (requirement doc §11 Build Order steps 7-10). -->
 
 - `Dialog` → focus trapped while open, focus restored to the trigger on close, `Escape` and
   overlay click dismiss, correct `role="dialog"`/`aria-modal` (via Radix Dialog).
-- `Select`, `Tabs`, `Tooltip` → full keyboard navigation and correct ARIA roles/states via
-  Radix primitives — not reimplemented by Forge.
+- `Select` → combobox trigger + listbox of options; typeahead and keyboard via Radix Select.
+- `Tabs` → tablist/tab/tabpanel roles; arrow keys, Home, and End via Radix Tabs.
+- `Tooltip` → `role="tooltip"`, dismiss on Escape, collision-aware placement via Radix Tooltip.
+  `TooltipProvider` is mounted in `src/app/layout.tsx`.
 - `Toast` → announced via a live region so it does not require the user to be looking at the
   screen when it appears.
 - `Data Table` → sortable/interactive headers are real buttons with accessible names, not

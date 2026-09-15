@@ -4,8 +4,9 @@
 Scaffolded. Tokens and the Button/Dialog components below reflect the "Editorial Dark" visual
 direction (design/Forge Prototype Editorial Dark standalone.html, adopted 2026-09-11 — see
 "Design tokens" and "Status / gaps" below), which fully replaced the earlier amber/JetBrains-Mono
-brand direction. Tabs/Tooltip/Select/Data Table are still proposed only — treat those
-sections as a draft to confirm during Build Order steps 9-10, not a locked decision.
+brand direction. Select, Tabs, and Tooltip are built (Build Order step 9). Data Table is still
+proposed only — treat that section as a draft to confirm during Build Order step 10, not a locked
+decision.
 -->
 
 The local, editable design system for Forge. Hand-built from scratch — Forge's whole point is
@@ -33,8 +34,8 @@ components/ui/
   types.ts          every prop interface + shared unions (Size, Tone, ButtonVariant, ...)
   helpers.ts        className-string derivations
   tokens/           token CSS files (see "Design tokens" below)
-  core/             Button (built), Tabs, Tooltip (proposed)
-  forms/            Input (built), Select (proposed)
+  core/             Button (built), Tabs (built), Tooltip (built)
+  forms/            Input (built), Select (built)
   feedback/         Dialog (built), Toast (built)
   data/             Data Table (proposed)
 ```
@@ -182,26 +183,35 @@ match the mockup's own variant naming (`primary`/`secondary`/`ghost`/`destructiv
 <Button variant="destructive" size="lg">Delete</Button>
 ```
 
-#### `Tabs`
+#### `Tabs` — built
 
-Wraps Radix Tabs for panel switching.
+Wraps Radix Tabs as a single composed control.
 
-- `defaultValue` · `value` (controlled) · `onValueChange`
+- `items` (`{ value, label, content, disabled? }[]`) · `defaultValue` · `value` (controlled) ·
+  `onValueChange` · `aria-label` (names the tablist)
 - Full keyboard navigation (arrow keys, Home/End) via Radix — not reimplemented.
+- Doc screens (`ButtonDoc`, `InputDoc`, …) keep their own local `role="tablist"` chrome so this
+  primitive is not nested inside itself on `/components`.
 
 ```tsx
-<Tabs defaultValue="usage">…</Tabs>
+<Tabs defaultValue="usage" items={tabItems} />
 ```
 
-#### `Tooltip`
+#### `Tooltip` — built
 
 Wraps Radix Tooltip for supplementary labels.
 
-- `content` · `side` (`'top' | 'right' | 'bottom' | 'left'`) · `delayDuration`
+- `content` · `side` (`'top' | 'right' | 'bottom' | 'left'`, default `'top'`) · `delayDuration` ·
+  `open` / `defaultOpen` / `onOpenChange` (controlled; useful in tests so jsdom does not have to
+  simulate hover)
 - Dismisses on `Escape`; positioned via Radix's collision-aware placement.
+- Trigger is `asChild` — pass a single element (typically `Button`), not a text node.
+- Mount `TooltipProvider` once in `src/app/layout.tsx`. Default delay is
+  `DEFAULT_TOOLTIP_DELAY_MS` (700, matching Radix). Pass `delayDuration={0}` in tests and snappy
+  demos.
 
 ```tsx
-<Tooltip content="Copy to clipboard"><Button /></Tooltip>
+<Tooltip content="Copy to clipboard"><Button>Hover me</Button></Tooltip>
 ```
 
 ### Forms
@@ -219,15 +229,17 @@ does not import either library (see `/playground` email demo).
 <Input errorMessage="Enter a valid email" placeholder="you@example.com" />
 ```
 
-#### `Select`
+#### `Select` — built
 
-Wraps Radix Select.
+Wraps Radix Select as a single composed field. Trigger chrome matches Input so form fields sit
+on one scale.
 
-- `options` · `value` / `defaultValue` · `onValueChange` · `disabled`
-- Full keyboard navigation and ARIA roles via Radix.
+- `options` (`{ value, label, disabled? }[]`) · `value` / `defaultValue` · `onValueChange` ·
+  `disabled` · `placeholder` (default `Select…`) · `aria-label`
+- Full keyboard navigation and ARIA roles (combobox / listbox / option) via Radix.
 
 ```tsx
-<Select options={sizeOptions} />
+<Select aria-label="Size" options={sizeOptions} defaultValue="md" />
 ```
 
 ### Feedback
@@ -296,7 +308,9 @@ The design system carries these guarantees; do not regress them (mirrors
 docs/ARCHITECTURE.md's "Accessibility commitments", scoped to the component level):
 
 - `Dialog` → focus trap + restore, `Escape`/overlay dismiss, `role="dialog"` + `aria-modal`
-- `Select`, `Tabs`, `Tooltip` → full keyboard support and correct ARIA roles/states (Radix)
+- `Select` → combobox + listbox/option; typeahead and keyboard via Radix
+- `Tabs` → tablist/tab/tabpanel; arrow keys, Home, End via Radix
+- `Tooltip` → `role="tooltip"`, Escape dismiss; `TooltipProvider` in the root layout
 - `Toast` → rendered in a live region so it's announced without requiring visual focus
 - `Data Table` → sortable headers are real buttons with accessible names
 - `Input` → `aria-invalid` and an associated error message via `aria-describedby` when invalid
@@ -325,14 +339,16 @@ Testing Conventions).
 
 ## Status / gaps
 
-- **Fully styled and in use:** `Button`, `Input`, `Dialog`, `Toast`. "Editorial Dark" is the locked visual
+- **Fully styled and in use:** `Button`, `Input`, `Select`, `Tabs`, `Tooltip`, `Dialog`, `Toast`.
+  "Editorial Dark" is the locked visual
   direction as of 2026-09-11 (dark-only, no light theme) — see "Design tokens" above and
   `design/Forge Prototype Editorial Dark standalone.html` for the source mockup.
 - **Screens built against the new system:** `/` (Home), `/foundations` (token showcase),
-  `/components` (Button, Input, and Toast docs: Preview/Code/Accessibility tabs, via
-  `src/features/components/ButtonDoc.tsx`, `InputDoc.tsx`, and `ToastDoc.tsx`), `/playground`
-  (live Button and Input prop editors + Dialog demo + RHF/Zod email form + Toast firer, via
-  `src/features/playground/PlaygroundControls.tsx`). `Toaster` is mounted in `src/app/layout.tsx`.
+  `/components` (Button, Input, Select, Tabs, Tooltip, and Toast docs: Preview/Code/Accessibility
+  tabs, via `src/features/components/*Doc.tsx`), `/playground`
+  (live Button, Input, Select, Tabs, Tooltip prop editors + Dialog demo + RHF/Zod email form +
+  Toast firer, via `src/features/playground/PlaygroundControls.tsx`). `Toaster` and
+  `TooltipProvider` are mounted in `src/app/layout.tsx`.
 - **Not yet restyled:** `/patterns` and `/engineering` remain the original plain placeholder
   stub pages (no sidebar-shell styling applied) — out of scope for this pass since the mockup
   didn't cover those routes; restyle when their real content is built.
