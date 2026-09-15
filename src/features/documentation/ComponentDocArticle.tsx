@@ -1,5 +1,6 @@
 import type { JSX, ReactNode } from 'react'
 import Link from 'next/link'
+import { PAGE_FRAME_DOC_CLASS } from '@/components/ui'
 import { MarkdownBody } from './MarkdownBody'
 
 interface ComponentDocArticleProps {
@@ -20,7 +21,7 @@ export function ComponentDocArticle({
   preview,
 }: ComponentDocArticleProps): JSX.Element {
   return (
-    <article style={{ padding: '64px 56px', maxWidth: 920 }}>
+    <article className={PAGE_FRAME_DOC_CLASS}>
       <p style={{ margin: '0 0 var(--space-4)' }}>
         <Link
           href="/components"

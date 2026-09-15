@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import type { JSX } from 'react'
 import { PlaygroundControls } from '@/features/playground/PlaygroundControls'
+import { PageFrame } from '@/features/shell/PageFrame'
 
 export const metadata: Metadata = { title: 'Playground' }
 
 export default function PlaygroundPage(): JSX.Element {
   return (
-    <div style={{ padding: '64px 56px', maxWidth: 1040 }}>
+    <PageFrame width="wide">
       <div
         style={{
           fontSize: 'var(--text-xs)',
@@ -46,6 +47,6 @@ export default function PlaygroundPage(): JSX.Element {
       </p>
 
       <PlaygroundControls />
-    </div>
+    </PageFrame>
   )
 }

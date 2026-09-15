@@ -3,6 +3,7 @@
 import { useState, type JSX } from 'react'
 import { Button } from '@/components/ui'
 import type { ButtonVariant } from '@/components/ui'
+import { PREVIEW_GRID_CLASS } from '@/components/ui'
 
 type DocTab = 'preview' | 'code' | 'a11y'
 
@@ -67,7 +68,7 @@ export function ButtonDoc(): JSX.Element {
       </div>
 
       {activeTab === 'preview' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-3)' }}>
+        <div className={PREVIEW_GRID_CLASS}>
           {variants.map((variant) => (
             <div
               key={variant}

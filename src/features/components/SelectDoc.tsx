@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type JSX } from 'react'
-import { Select } from '@/components/ui'
+import { PREVIEW_GRID_CLASS, Select } from '@/components/ui'
 
 type DocTab = 'preview' | 'code' | 'a11y'
 
@@ -69,7 +69,7 @@ export function SelectDoc(): JSX.Element {
       </div>
 
       {activeTab === 'preview' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-3)' }}>
+        <div className={PREVIEW_GRID_CLASS}>
           <div>
             <div
               style={{

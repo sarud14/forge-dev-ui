@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import type { JSX } from 'react'
 import Link from 'next/link'
 import { ComponentDocPreview } from '@/features/components/ComponentDocPreview'
+import { PageFrame } from '@/features/shell/PageFrame'
 import { getComponentDocs, componentDocHref } from '@/lib/content/source'
 
 export const metadata: Metadata = { title: 'Components' }
@@ -10,7 +11,7 @@ export default async function ComponentsPage(): Promise<JSX.Element> {
   const docs = await getComponentDocs()
 
   return (
-    <div style={{ padding: '64px 56px', maxWidth: 920 }}>
+    <PageFrame width="doc">
       <div
         style={{
           fontSize: 'var(--text-xs)',
@@ -87,6 +88,6 @@ export default async function ComponentsPage(): Promise<JSX.Element> {
           </section>
         )
       })}
-    </div>
+    </PageFrame>
   )
 }

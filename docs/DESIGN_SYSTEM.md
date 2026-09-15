@@ -60,6 +60,7 @@ class like `bg-surface` resolves to `var(--color-background)`.
 | `typography.css` | `--font-sans`, `--font-serif`, `--font-mono`, `--font-brand`, a text-size scale (`--text-2xs`…`--text-3xl`), `--leading-tight`/`--leading-normal`/`--leading-relaxed`/`--leading-loose` |
 | `elevation.css` | Shadow tokens for Dialog/Toast/Tooltip surfaces (`--shadow-sm/md/lg`) — not yet populated |
 | `motion.css` | Duration/easing tokens for Dialog open/close, Toast enter/exit, Tooltip delay (`--duration-*`, `--ease-standard`) — not yet populated |
+| `breakpoints.css` | Viewport stops `--bp-phone-sm` (360), `--bp-phone-lg` (430, Pro Max-class), `--bp-tablet` (768), `--bp-laptop` (1024), `--bp-desktop` (1440), plus layout sizes `--size-sidebar` / `--size-dialog` / `--size-content` / `--size-content-wide` / `--size-playground-rail`. Pixel copies for `matchMedia` live in `src/components/ui/breakpoints.ts` |
 
 **Palette — "Editorial Dark", locked 2026-09-11.** Forge replaced its earlier amber/JetBrains-Mono
 brand direction wholesale with the palette from `design/Forge Prototype Editorial Dark
@@ -126,6 +127,23 @@ source of visual truth). Flagged to Ruj as a deliberate normalization, not silen
   `style={{ fontFamily: 'var(--font-serif)' }}` rather than a Tailwind utility class, since Button
   is the only styled component and most page copy sets its own font inline — promote to a
   utility once a second consumer needs the same class
+- Breakpoints (mobile-first `min-width`): `phone-sm:` 360px, `phone-lg:` 430px, `tablet:` 768px,
+  `laptop:` 1024px, `desktop:` 1440px. Mapped in `globals.css` `@theme` from `tokens/breakpoints.css`.
+  Default Tailwind `sm`/`md`/`lg` remain; do not use them for Forge layout — they are not these
+  device stops.
+
+**Breakpoints — locked with this pass.** Five named stops, not Tailwind’s default scale:
+
+| Token | Pixels | Device class | Layout |
+|---|---|---|---|
+| `--bp-phone-sm` | 360 | Compact phone | Base styles; top bar + Menu |
+| `--bp-phone-lg` | 430 | Pro Max-class phone | Same shell; slightly more padding |
+| `--bp-tablet` | 768 | Tablet | Preview grids go 2-column; still Menu |
+| `--bp-laptop` | 1024 | Laptop | Persistent sidebar |
+| `--bp-desktop` | 1440 | Desktop | Widest page padding |
+
+`AppShell` (`src/features/shell/AppShell.tsx`) switches at the laptop stop. JS reads
+`BREAKPOINTS` from `@/components/ui` because `matchMedia` cannot use CSS custom properties.
 
 Adjust a design value by editing the token file and/or extending the `@theme` block. **Do not**
 add a new global or per-component CSS file — see AGENTS.md's Design Tokens rule.
@@ -366,6 +384,7 @@ Testing Conventions).
 - **Known gaps:** `Button`'s `isLoading` state has no spinner asset — it swaps to literal
   "Loading…" text; `--radius-lg` on `Button`'s `lg` size is normalized from the mockup's literal
   10px to the token's 16px (see "Design tokens" → "Radius normalization").
+  `/patterns` and `/engineering` stubs are still unpadded placeholders.
 - **Known substitutions:** none for the built components — Public Sans/Spectral/IBM Plex Mono
   and the teal accent (`#45c4b0`, also used by the logo mark) are the real, chosen values, not
   placeholders.

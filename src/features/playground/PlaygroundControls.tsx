@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type ChangeEvent, type JSX } from 'react'
-import { Button, DataTable, Dialog, Input, Select, Tabs, Tooltip, toast } from '@/components/ui'
+import { Button, DataTable, Dialog, Input, Select, Tabs, Tooltip, toast, PLAYGROUND_SPLIT_CLASS } from '@/components/ui'
 import type {
   ButtonVariant,
   DataTableColumn,
@@ -143,7 +143,7 @@ export function PlaygroundControls(): JSX.Element {
         <h2 id="playground-button-heading" style={sectionHeadingStyle}>
           Button
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+        <div className={PLAYGROUND_SPLIT_CLASS}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <div>
               <label htmlFor="playground-variant" style={labelStyle}>
@@ -242,7 +242,7 @@ export function PlaygroundControls(): JSX.Element {
         <h2 id="playground-input-heading" style={sectionHeadingStyle}>
           Input
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+        <div className={PLAYGROUND_SPLIT_CLASS}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <div>
               <label htmlFor="playground-input-tone" style={labelStyle}>
@@ -318,7 +318,7 @@ export function PlaygroundControls(): JSX.Element {
         <h2 id="playground-toast-heading" style={sectionHeadingStyle}>
           Toast
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+        <div className={PLAYGROUND_SPLIT_CLASS}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <div>
               <label htmlFor="playground-toast-tone" style={labelStyle}>
@@ -392,7 +392,7 @@ export function PlaygroundControls(): JSX.Element {
         <h2 id="playground-select-heading" style={sectionHeadingStyle}>
           Select
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+        <div className={PLAYGROUND_SPLIT_CLASS}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <Select
               aria-label="Select size"
@@ -421,7 +421,7 @@ export function PlaygroundControls(): JSX.Element {
         <h2 id="playground-tabs-heading" style={sectionHeadingStyle}>
           Tabs
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+        <div className={PLAYGROUND_SPLIT_CLASS}>
           <div>
             <label htmlFor="playground-tab-value" style={labelStyle}>
               Active tab
@@ -456,7 +456,7 @@ export function PlaygroundControls(): JSX.Element {
         <h2 id="playground-tooltip-heading" style={sectionHeadingStyle}>
           Tooltip
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+        <div className={PLAYGROUND_SPLIT_CLASS}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <div>
               <label htmlFor="playground-tooltip-side" style={labelStyle}>
@@ -504,7 +504,7 @@ export function PlaygroundControls(): JSX.Element {
         <h2 id="playground-table-heading" style={sectionHeadingStyle}>
           Data Table
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 'var(--space-6)' }}>
+        <div className={PLAYGROUND_SPLIT_CLASS}>
           <label style={{ ...labelStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
             <input
               type="checkbox"

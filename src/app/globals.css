@@ -6,6 +6,7 @@
 @import '../components/ui/tokens/radius.css';
 @import '../components/ui/tokens/elevation.css';
 @import '../components/ui/tokens/motion.css';
+@import '../components/ui/tokens/breakpoints.css';
 
 /* Tailwind v4 CSS-first theme — maps token custom properties to utility classes.
    Never hardcode a raw value here or in a component; add/adjust a token above instead
@@ -30,6 +31,12 @@
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
+
+  --breakpoint-phone-sm: 360px;
+  --breakpoint-phone-lg: 430px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-laptop: 1024px;
+  --breakpoint-desktop: 1440px;
 }
 
 ::selection {
