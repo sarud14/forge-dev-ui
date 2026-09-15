@@ -350,8 +350,10 @@ Testing Conventions).
   direction as of 2026-09-11 (dark-only, no light theme) — see "Design tokens" above and
   `design/Forge Prototype Editorial Dark standalone.html` for the source mockup.
 - **Screens built against the new system:** `/` (Home), `/foundations` (token showcase),
-  `/components` (Button, Input, Select, Tabs, Tooltip, Toast, and Data Table docs:
-  Preview/Code/Accessibility tabs, via `src/features/components/*Doc.tsx`), `/playground`
+  `/components` (index driven by `getComponentDocs()` — Button, Input, Select, Tabs, Tooltip,
+  Dialog, Toast, and Data Table, each with Preview/Code/Accessibility tabs via
+  `src/features/components/*Doc.tsx`), `/components/[slug]` (MDX body from
+  `content/components/*.mdx` plus the matching live preview), `/playground`
   (live Button, Input, Select, Tabs, Tooltip, Data Table prop editors + Dialog demo + RHF/Zod
   email form + Toast firer, via `src/features/playground/PlaygroundControls.tsx`). `Toaster` and
   `TooltipProvider` are mounted in `src/app/layout.tsx`.

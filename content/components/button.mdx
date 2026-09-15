@@ -1,0 +1,18 @@
+---
+slug: button
+title: Button
+summary: Trigger for an action, built on native button semantics.
+order: 1
+---
+
+## When to use
+
+Use Button when the user performs an action — submit, confirm, open a dialog, fire a toast. Do not use it as a link; use a real `<a>` for navigation.
+
+## API
+
+`variant` is `primary`, `secondary`, `ghost`, or `destructive`. `size` is `sm`, `md`, or `lg`. `isLoading` sets `aria-busy` and replaces the label with “Loading…”.
+
+## Accessibility
+
+Renders a native `<button>`. Focus uses a 2px outline in `--color-primary`. `disabled` is the native attribute, not a visual-only style.

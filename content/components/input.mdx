@@ -1,0 +1,18 @@
+---
+slug: input
+title: Input
+summary: Native text field with a danger tone and associated error text.
+order: 2
+---
+
+## When to use
+
+Use Input for short text. Validation libraries bind through standard input props — Input does not import React Hook Form or Zod.
+
+## API
+
+Phase 1 ships `size="md"` only. `tone` is `neutral` or `danger`. `errorMessage` sets `aria-invalid` and points `aria-describedby` at the visible error.
+
+## Accessibility
+
+Typing, Tab focus, and disabled skipping come from the platform. The invalid state is announced with its reason, not color alone.
