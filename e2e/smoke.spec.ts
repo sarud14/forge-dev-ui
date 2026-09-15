@@ -22,3 +22,10 @@ test('pattern doc page renders MDX body and a composed preview', async ({ page }
   await expect(page.getByRole('heading', { name: 'When to use' })).toBeVisible()
   await expect(page.getByRole('textbox', { name: 'Email' })).toBeVisible()
 })
+
+test('engineering write-up renders MDX body', async ({ page }) => {
+  await page.goto('/engineering/accessibility')
+  await expect(page.getByRole('heading', { level: 1, name: 'Accessibility' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Stance' })).toBeVisible()
+  await expect(page.getByRole('link', { name: '← Engineering' })).toBeVisible()
+})

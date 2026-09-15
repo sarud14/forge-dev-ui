@@ -1,0 +1,24 @@
+---
+slug: accessibility
+title: Accessibility
+summary: Semantic HTML, Radix primitives, and axe smoke checks — not a WCAG certificate.
+order: 1
+---
+
+## Stance
+
+Forge treats accessibility as a product requirement, not a polish pass. Interactive primitives wrap Radix so focus trapping, keyboard movement, and dismiss behavior are not reimplemented by hand.
+
+## Phase 1 contract
+
+- Dialog traps focus, restores it on close, and dismisses on Escape or overlay click.
+- Select is a combobox plus listbox with typeahead via Radix.
+- Tabs expose tablist, tab, and tabpanel; arrow keys, Home, and End move between tabs.
+- Tooltip has `role="tooltip"` and dismisses on Escape.
+- Toast is announced through a live region.
+- Data Table sortable headers are real buttons with `aria-sort`.
+- Input errors use `aria-invalid` and `aria-describedby`, not color alone.
+
+## How we check
+
+Component tests assert roles, names, and `aria-*` attributes. Playwright plus axe-core runs on the home page as a smoke gate. Automated checks cannot prove assistive-technology quality — that claim is not made in Phase 1.

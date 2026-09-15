@@ -21,6 +21,12 @@ export interface PatternDoc extends ContentDocMeta {
   readonly body: string
 }
 
+export type EngineeringDocMeta = ContentDocMeta
+
+export interface EngineeringDoc extends ContentDocMeta {
+  readonly body: string
+}
+
 export interface DecisionDocMeta {
   readonly slug: string
   readonly title: string
@@ -37,4 +43,8 @@ export interface ComponentDocPreviewProps {
 
 export interface ContentSlugPageProps {
   readonly params: Promise<{ readonly slug: string }>
+}
+
+export interface EngineeringSectionPageProps {
+  readonly slug: string
 }

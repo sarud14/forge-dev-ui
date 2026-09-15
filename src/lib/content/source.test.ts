@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import {
   componentDocHref,
+  engineeringDocHref,
   getComponentDoc,
   getComponentDocs,
+  getEngineeringDoc,
+  getEngineeringDocs,
   getPatternDoc,
   getPatternDocs,
   patternDocHref,
@@ -78,5 +81,38 @@ describe('getPatternDoc', () => {
   it('returns null for an unknown or unsafe slug', async () => {
     expect(await getPatternDoc('not-a-pattern')).toBeNull()
     expect(await getPatternDoc('../form')).toBeNull()
+  })
+})
+
+describe('getEngineeringDocs', () => {
+  it('returns the Phase 1 engineering set in frontmatter order', async () => {
+    const docs = await getEngineeringDocs()
+
+    expect(docs.map((doc) => doc.slug)).toEqual([
+      'accessibility',
+      'performance',
+      'testing',
+      'decisions',
+    ])
+  })
+})
+
+describe('engineeringDocHref', () => {
+  it('builds the per-slug engineering path', () => {
+    expect(engineeringDocHref('accessibility')).toBe('/engineering/accessibility')
+  })
+})
+
+describe('getEngineeringDoc', () => {
+  it('returns the body for a known slug', async () => {
+    const doc = await getEngineeringDoc('testing')
+
+    expect(doc?.title).toBe('Testing')
+    expect(doc?.body).toContain('Levels')
+  })
+
+  it('returns null for an unknown or unsafe slug', async () => {
+    expect(await getEngineeringDoc('not-a-guide')).toBeNull()
+    expect(await getEngineeringDoc('../testing')).toBeNull()
   })
 })

@@ -24,4 +24,25 @@ Use Button for actions.
     expect(screen.getByRole('heading', { level: 2, name: 'When to use' })).toBeInTheDocument()
     expect(screen.getByText('Live preview')).toBeInTheDocument()
   })
+
+  it('omits the preview region when no preview is passed', () => {
+    render(
+      <ComponentDocArticle
+        title="Accessibility"
+        summary="How Forge checks a11y."
+        body={`## Stance
+
+Semantic HTML first.
+`}
+        backHref="/engineering"
+        backLabel="← Engineering"
+      />
+    )
+
+    expect(screen.getByRole('link', { name: '← Engineering' })).toHaveAttribute(
+      'href',
+      '/engineering',
+    )
+    expect(screen.queryByText('Live preview')).not.toBeInTheDocument()
+  })
 })

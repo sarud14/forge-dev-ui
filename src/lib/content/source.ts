@@ -4,6 +4,8 @@ import type {
   ComponentDoc,
   ComponentDocMeta,
   DecisionDocMeta,
+  EngineeringDoc,
+  EngineeringDocMeta,
   PatternDoc,
   PatternDocMeta,
 } from '@/types/content.types'
@@ -12,6 +14,7 @@ import { parseFrontmatter } from './parseFrontmatter'
 
 const COMPONENTS_DIR = path.join(process.cwd(), 'content', 'components')
 const PATTERNS_DIR = path.join(process.cwd(), 'content', 'patterns')
+const ENGINEERING_DIR = path.join(process.cwd(), 'content', 'engineering')
 
 async function readOrderedDocs(dir: string): Promise<readonly ComponentDoc[]> {
   let names: readonly string[]
@@ -82,6 +85,24 @@ export async function getPatternDoc(slug: string): Promise<PatternDoc | null> {
   }
 
   const docs = await readOrderedDocs(PATTERNS_DIR)
+  return docs.find((doc) => doc.slug === slug) ?? null
+}
+
+export async function getEngineeringDocs(): Promise<readonly EngineeringDocMeta[]> {
+  const docs = await readOrderedDocs(ENGINEERING_DIR)
+  return docs.map(({ slug, title, summary, order }) => ({ slug, title, summary, order }))
+}
+
+export function engineeringDocHref(slug: string): string {
+  return `/engineering/${slug}`
+}
+
+export async function getEngineeringDoc(slug: string): Promise<EngineeringDoc | null> {
+  if (!isSafeContentSlug(slug)) {
+    return null
+  }
+
+  const docs = await readOrderedDocs(ENGINEERING_DIR)
   return docs.find((doc) => doc.slug === slug) ?? null
 }
 

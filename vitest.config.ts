@@ -13,6 +13,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@/components/ui': path.resolve(__dirname, './src/components/ui/index.ts'),
+      '@/features': path.resolve(__dirname, './src/features'),
       '@/lib': path.resolve(__dirname, './src/lib'),
       '@/types': path.resolve(__dirname, './src/types'),
       '@/constants': path.resolve(__dirname, './src/constants'),

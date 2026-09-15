@@ -81,9 +81,8 @@ src/
 │   ├── components/        <- powers app/components (ButtonDoc.tsx: Preview/Code/A11y tabs)
 │   ├── patterns/          <- powers app/patterns
 │   ├── foundations/       <- powers app/foundations
-│   ├── engineering/       <- powers app/engineering/*
 │   ├── playground/        <- powers app/playground (PlaygroundControls.tsx)
-│   └── documentation/     <- shared MDX rendering used by components/patterns/foundations
+│   └── documentation/     <- shared MDX rendering used by components/patterns/engineering
 ├── lib/
 │   ├── seo/
 │   │   └── siteMetadata.ts <- title/OG/JSON-LD/robots/sitemap builders (no feature imports)
@@ -117,7 +116,8 @@ src/
 content/
 ├── components/            <- Phase 1 MDX docs, one file per locked primitive
 ├── patterns/              <- Phase 1 MDX docs (Form, Search, Data Table, empty/loading/error, Confirmation)
-├── decisions/
+├── engineering/           <- Accessibility, Performance, Testing, Decisions write-ups
+├── decisions/             <- reserved for individual ADRs; getDecisionDocs() still returns []
 └── guides/
 
 e2e/
@@ -233,12 +233,15 @@ Forge has no live backend — "data" is MDX content, not fixtures for a future A
   `src/types/content.types.ts`.
 - `src/lib/content/source.ts` exposes `getComponentDocs()`, `getComponentDoc(slug)`,
   `componentDocHref(slug)`, `getPatternDocs()`, `getPatternDoc(slug)`, `patternDocHref(slug)`,
+  `getEngineeringDocs()`, `getEngineeringDoc(slug)`, `engineeringDocHref(slug)`,
   `getDecisionDocs()` — pure read functions over
   `content/`, per requirement doc §4. No component or route reads the filesystem directly.
-- Phase 1 parses `content/components/*.mdx` and `content/patterns/*.mdx` with `parseFrontmatter.ts`
+- Phase 1 parses `content/components/*.mdx`, `content/patterns/*.mdx`, and
+  `content/engineering/*.mdx` with `parseFrontmatter.ts`
   and renders the markdown subset via `parseMarkdown.ts` + `features/documentation/MarkdownBody.tsx`.
   JSX in MDX is not compiled yet (no extra MDX package — AGENTS.md "Ask First").
-- `getDecisionDocs()` still returns `[]` until `content/decisions/` is filled.
+- `getDecisionDocs()` still returns `[]` until `content/decisions/` is filled. The Phase 1
+  decisions write-up lives at `/engineering/decisions` from `content/engineering/decisions.mdx`.
 - Any value derived from content for display (e.g. a computed "last updated" label) is a pure
   helper in `src/lib/content/`, never inline in a route component.
 
@@ -266,8 +269,7 @@ Route table mirrors requirement doc §5 exactly — no deviation planned for Pha
   this way) — instead, accessibility checks (below) act as the cross-cutting suite for the
   design system.
 - **E2E:** `e2e/`, using Playwright. Phase 1 critical flows: browsing a component doc page,
-  interacting with a component in the Playground, and the accessibility smoke pass across
-  Foundations/Components/Patterns pages.
+  a pattern composition, an engineering write-up, and the accessibility smoke pass on home.
 - Run: `yarn install` · `yarn test` · `yarn build` · `yarn lint` · `yarn type-check` ·
   `yarn test:e2e`
 - **CI:** `.github/workflows/ci.yml` — on push/PR to `main`: lint → type-check → unit tests →
@@ -305,9 +307,6 @@ assistive-technology testing and expert review are still required before that cl
   against the real registry. Run `yarn install` · `yarn build` · `yarn lint` · `yarn type-check`
   · `yarn test` on a machine with registry access before treating any of it as verified (AGENTS.md
   "Definition of Done"); replace the TBD stack-version cells above from the resulting `yarn.lock`.
-- **`/engineering` is still an unstyled placeholder stub** — see
-  docs/DESIGN_SYSTEM.md's "Status / gaps" — not restyled for Editorial Dark since the source
-  mockup didn't cover those routes.
 - **The logo mark intentionally diverges from the rest of the palette** — it reuses the
   Chevron Peak icon/amber from `design/forge-logo-directions` while every other color stays on
   the teal Editorial Dark palette; see docs/DESIGN_SYSTEM.md's "Design tokens" → "Logo".

@@ -1,0 +1,20 @@
+---
+slug: testing
+title: Testing
+summary: Colocated Vitest tests for logic and UI, Playwright plus axe for critical flows, CI on every PR.
+order: 3
+---
+
+## Levels
+
+- Unit tests sit next to pure modules (`source.ts`, query helpers, validators). No rendering.
+- Component tests sit next to the component and assert semantics — roles, labels, `aria-*`, not Tailwind class strings.
+- End-to-end specs live in `e2e/` and cover critical flows only: home axe smoke, a component doc, a pattern doc, an engineering write-up.
+
+## Commands
+
+`yarn test` runs Vitest. `yarn test:e2e` runs Playwright. CI on `main` runs lint, type-check, unit tests, production build, then e2e, then Vercel.
+
+## What a passing test means
+
+A green suite means the wired behavior still holds. It does not mean the visual design is correct, and it does not replace keyboard or screen-reader review for new interaction.
