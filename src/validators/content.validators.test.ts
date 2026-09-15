@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isSafeContentSlug, parseComponentDocMeta } from './content.validators'
+import { isSafeContentSlug, parseContentDocMeta } from './content.validators'
 
 describe('isSafeContentSlug', () => {
   it('accepts kebab-case slugs and rejects path traversal', () => {
@@ -9,10 +9,10 @@ describe('isSafeContentSlug', () => {
   })
 })
 
-describe('parseComponentDocMeta', () => {
+describe('parseContentDocMeta', () => {
   it('returns a meta object when required fields are present', () => {
     expect(
-      parseComponentDocMeta({
+      parseContentDocMeta({
         slug: 'button',
         title: 'Button',
         summary: 'Trigger for an action',
@@ -27,9 +27,9 @@ describe('parseComponentDocMeta', () => {
   })
 
   it('rejects incomplete or unsafe frontmatter', () => {
-    expect(parseComponentDocMeta({ slug: 'button', title: 'Button' })).toBeNull()
+    expect(parseContentDocMeta({ slug: 'button', title: 'Button' })).toBeNull()
     expect(
-      parseComponentDocMeta({
+      parseContentDocMeta({
         slug: '../nope',
         title: 'X',
         summary: 'Y',

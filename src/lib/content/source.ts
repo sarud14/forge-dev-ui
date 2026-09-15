@@ -1,15 +1,22 @@
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
-import type { ComponentDoc, ComponentDocMeta, DecisionDocMeta, PatternDocMeta } from '@/types/content.types'
-import { isSafeContentSlug, parseComponentDocMeta } from '@/validators/content.validators'
+import type {
+  ComponentDoc,
+  ComponentDocMeta,
+  DecisionDocMeta,
+  PatternDoc,
+  PatternDocMeta,
+} from '@/types/content.types'
+import { isSafeContentSlug, parseContentDocMeta } from '@/validators/content.validators'
 import { parseFrontmatter } from './parseFrontmatter'
 
 const COMPONENTS_DIR = path.join(process.cwd(), 'content', 'components')
+const PATTERNS_DIR = path.join(process.cwd(), 'content', 'patterns')
 
-async function readComponentDocs(): Promise<readonly ComponentDoc[]> {
+async function readOrderedDocs(dir: string): Promise<readonly ComponentDoc[]> {
   let names: readonly string[]
   try {
-    names = await readdir(COMPONENTS_DIR)
+    names = await readdir(dir)
   } catch {
     return []
   }
@@ -20,9 +27,9 @@ async function readComponentDocs(): Promise<readonly ComponentDoc[]> {
       continue
     }
 
-    const raw = await readFile(path.join(COMPONENTS_DIR, name), 'utf8')
+    const raw = await readFile(path.join(dir, name), 'utf8')
     const parsed = parseFrontmatter(raw)
-    const meta = parseComponentDocMeta(parsed.data)
+    const meta = parseContentDocMeta(parsed.data)
     if (meta === null) {
       continue
     }
@@ -43,7 +50,7 @@ async function readComponentDocs(): Promise<readonly ComponentDoc[]> {
  * parseMarkdown.ts — JSX in content is not compiled yet.
  */
 export async function getComponentDocs(): Promise<readonly ComponentDocMeta[]> {
-  const docs = await readComponentDocs()
+  const docs = await readOrderedDocs(COMPONENTS_DIR)
   return docs.map(({ slug, title, summary, order }) => ({ slug, title, summary, order }))
 }
 
@@ -56,12 +63,26 @@ export async function getComponentDoc(slug: string): Promise<ComponentDoc | null
     return null
   }
 
-  const docs = await readComponentDocs()
+  const docs = await readOrderedDocs(COMPONENTS_DIR)
   return docs.find((doc) => doc.slug === slug) ?? null
 }
 
 export async function getPatternDocs(): Promise<readonly PatternDocMeta[]> {
-  return []
+  const docs = await readOrderedDocs(PATTERNS_DIR)
+  return docs.map(({ slug, title, summary, order }) => ({ slug, title, summary, order }))
+}
+
+export function patternDocHref(slug: string): string {
+  return `/patterns/${slug}`
+}
+
+export async function getPatternDoc(slug: string): Promise<PatternDoc | null> {
+  if (!isSafeContentSlug(slug)) {
+    return null
+  }
+
+  const docs = await readOrderedDocs(PATTERNS_DIR)
+  return docs.find((doc) => doc.slug === slug) ?? null
 }
 
 export async function getDecisionDocs(): Promise<readonly DecisionDocMeta[]> {

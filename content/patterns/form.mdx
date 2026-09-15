@@ -1,0 +1,18 @@
+---
+slug: form
+title: Form
+summary: Compose Input, Select, and Button. Validation stays in the caller.
+order: 1
+---
+
+## When to use
+
+Use a form when the user submits one or more fields together. Do not invent a Form primitive — bind React Hook Form or native form props onto Input and Select.
+
+## How
+
+Wrap fields in a native `<form>`. Put labels next to each control. Submit with Button. The playground email demo is the Phase 1 reference: Zod validates, Input only receives `tone` and `errorMessage`.
+
+## Accessibility
+
+Every field has a visible label or `aria-label`. Errors are associated with `aria-describedby`, not color alone. Keyboard submit is the native form Enter behavior.

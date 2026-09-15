@@ -1,28 +1,28 @@
 import type { Metadata } from 'next'
 import type { JSX } from 'react'
 import { notFound } from 'next/navigation'
-import { ComponentDocPreview } from '@/features/components/ComponentDocPreview'
 import { ComponentDocArticle } from '@/features/documentation/ComponentDocArticle'
-import { getComponentDoc, getComponentDocs } from '@/lib/content/source'
+import { PatternPreview } from '@/features/patterns/PatternPreview'
+import { getPatternDoc, getPatternDocs } from '@/lib/content/source'
 import type { ContentSlugPageProps } from '@/types/content.types'
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const docs = await getComponentDocs()
+  const docs = await getPatternDocs()
   return docs.map((doc) => ({ slug: doc.slug }))
 }
 
 export async function generateMetadata({ params }: ContentSlugPageProps): Promise<Metadata> {
   const { slug } = await params
-  const doc = await getComponentDoc(slug)
+  const doc = await getPatternDoc(slug)
 
-  return { title: doc?.title ?? 'Component' }
+  return { title: doc?.title ?? 'Pattern' }
 }
 
-export default async function ComponentSlugPage({
+export default async function PatternSlugPage({
   params,
 }: ContentSlugPageProps): Promise<JSX.Element> {
   const { slug } = await params
-  const doc = await getComponentDoc(slug)
+  const doc = await getPatternDoc(slug)
 
   if (doc === null) {
     notFound()
@@ -33,9 +33,9 @@ export default async function ComponentSlugPage({
       title={doc.title}
       summary={doc.summary}
       body={doc.body}
-      preview={<ComponentDocPreview slug={doc.slug} />}
-      backHref="/components"
-      backLabel="← Components"
+      preview={<PatternPreview slug={doc.slug} />}
+      backHref="/patterns"
+      backLabel="← Patterns"
     />
   )
 }

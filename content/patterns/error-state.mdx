@@ -1,0 +1,18 @@
+---
+slug: error-state
+title: Error State
+summary: A failed action with a recoverable reason, not a toast-only shrug.
+order: 6
+---
+
+## When to use
+
+Use Error State when the user can correct the input or retry. Use Toast for a non-blocking outcome that does not invalidate the form.
+
+## How
+
+On a field, set Input `tone="danger"` and `errorMessage`. On a page-level failure, keep the previous UI and explain what failed next to a retry Button. Do not rely on color alone.
+
+## Accessibility
+
+`aria-invalid` and `aria-describedby` must point at the visible error. Retry is a real button.

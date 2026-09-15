@@ -116,7 +116,7 @@ src/
 
 content/
 ├── components/            <- Phase 1 MDX docs, one file per locked primitive
-├── patterns/              <- stub until a later Phase 1 content pass
+├── patterns/              <- Phase 1 MDX docs (Form, Search, Data Table, empty/loading/error, Confirmation)
 ├── decisions/
 └── guides/
 
@@ -232,12 +232,13 @@ Forge has no live backend — "data" is MDX content, not fixtures for a future A
 - Content types (frontmatter shape for components/patterns/decisions/guides docs) live in
   `src/types/content.types.ts`.
 - `src/lib/content/source.ts` exposes `getComponentDocs()`, `getComponentDoc(slug)`,
-  `componentDocHref(slug)`, `getPatternDocs()`, `getDecisionDocs()` — pure read functions over
+  `componentDocHref(slug)`, `getPatternDocs()`, `getPatternDoc(slug)`, `patternDocHref(slug)`,
+  `getDecisionDocs()` — pure read functions over
   `content/`, per requirement doc §4. No component or route reads the filesystem directly.
-- Phase 1 parses `content/components/*.mdx` with `parseFrontmatter.ts` and renders the markdown
-  subset via `parseMarkdown.ts` + `features/documentation/MarkdownBody.tsx`. JSX in MDX is not
-  compiled yet (no extra MDX package — AGENTS.md "Ask First").
-- `getPatternDocs()` / `getDecisionDocs()` still return `[]` until those folders are filled.
+- Phase 1 parses `content/components/*.mdx` and `content/patterns/*.mdx` with `parseFrontmatter.ts`
+  and renders the markdown subset via `parseMarkdown.ts` + `features/documentation/MarkdownBody.tsx`.
+  JSX in MDX is not compiled yet (no extra MDX package — AGENTS.md "Ask First").
+- `getDecisionDocs()` still returns `[]` until `content/decisions/` is filled.
 - Any value derived from content for display (e.g. a computed "last updated" label) is a pure
   helper in `src/lib/content/`, never inline in a route component.
 
@@ -304,7 +305,7 @@ assistive-technology testing and expert review are still required before that cl
   against the real registry. Run `yarn install` · `yarn build` · `yarn lint` · `yarn type-check`
   · `yarn test` on a machine with registry access before treating any of it as verified (AGENTS.md
   "Definition of Done"); replace the TBD stack-version cells above from the resulting `yarn.lock`.
-- **`/patterns` and `/engineering` are unstyled placeholder stubs** — see
+- **`/engineering` is still an unstyled placeholder stub** — see
   docs/DESIGN_SYSTEM.md's "Status / gaps" — not restyled for Editorial Dark since the source
   mockup didn't cover those routes.
 - **The logo mark intentionally diverges from the rest of the palette** — it reuses the

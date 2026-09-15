@@ -1,0 +1,18 @@
+---
+slug: search
+title: Search
+summary: A query field plus an explicit submit control. Do not search on every keystroke in Phase 1.
+order: 2
+---
+
+## When to use
+
+Use Search when the user looks up a known set of records. Prefer a dedicated page filter over putting search inside a Dialog.
+
+## How
+
+Use Input with `type="search"` and a Button labeled Search. Submit the native form; the caller runs the query. Do not debounce inside Input.
+
+## Accessibility
+
+Name the field “Search”. The button is a real submit control, not a clickable icon without a name.

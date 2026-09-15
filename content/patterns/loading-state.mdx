@@ -1,0 +1,18 @@
+---
+slug: loading-state
+title: Loading State
+summary: In-flight feedback that does not steal keyboard focus.
+order: 5
+---
+
+## When to use
+
+Use Loading State while a request is outstanding. Prefer Button `isLoading` on the control that started the request. Do not replace the whole page with a spinner if the surrounding chrome can stay.
+
+## How
+
+Set `isLoading` on Button so `aria-busy` is set and the control is disabled. Toasts may report completion after; they must not be the only loading signal for a submit.
+
+## Accessibility
+
+`aria-busy` on the busy control. Do not move focus into a loading region. The label becomes “Loading…” so the name stays announceable.

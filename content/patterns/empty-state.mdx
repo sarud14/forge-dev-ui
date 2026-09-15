@@ -1,0 +1,18 @@
+---
+slug: empty-state
+title: Empty State
+summary: What to show when a collection has zero items — not an error, not a spinner.
+order: 4
+---
+
+## When to use
+
+Use Empty State when the query succeeded and the list is legitimately empty. Use Error State when the query failed. Use Loading State while it is in flight.
+
+## How
+
+Data Table’s `emptyState` is the Phase 1 hook. Keep the copy short and, if there is a next action, use a real Button (for example “Create component”).
+
+## Accessibility
+
+The empty copy is plain text in the table body, not a colored illustration with no accessible name. The follow-up action is a real button.
