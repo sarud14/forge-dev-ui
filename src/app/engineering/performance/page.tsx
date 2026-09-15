@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import type { JSX } from 'react'
+import { EngineeringSectionPage, engineeringSectionMetadata } from '../engineeringSection'
 
-export const metadata: Metadata = { title: 'Performance' }
+const SLUG = 'performance'
 
-export default function PerformancePage(): JSX.Element {
-  return (
-    <section>
-      <h1>Performance</h1>
-      <p>Bundle size tracking and Web Vitals reporting are Phase 4 (see requirement doc §9).</p>
-    </section>
-  )
+export async function generateMetadata(): Promise<Metadata> {
+  return engineeringSectionMetadata(SLUG)
+}
+
+export default async function PerformancePage(): Promise<JSX.Element> {
+  return <EngineeringSectionPage slug={SLUG} />
 }

@@ -1,0 +1,24 @@
+---
+slug: decisions
+title: Decisions
+summary: The Phase 1 locks — Git+MDX, Radix, CSS tokens, Editorial Dark, Yarn, and quality gates.
+order: 4
+---
+
+## Why these exist
+
+Forge is a system, not a bag of widgets. Fewer primitives shipped, each with usage rules, states, and a reason it looks the way it does.
+
+## Locked in Phase 1
+
+- Content lives in Git as MDX. No database and no CMS. Reads go through `src/lib/content/source.ts`.
+- Interaction-heavy controls wrap Radix instead of reimplementing focus and keyboard behavior.
+- Visual values are CSS custom properties. Components consume tokens, not raw hex or pixel literals.
+- Editorial Dark is the only theme. There is no light mode and no `prefers-color-scheme` branch.
+- Yarn is the only package manager. New packages wait for an explicit ask.
+- Lint, type-check, tests, and production build are required before a slice is done.
+- No auth, no accounts, and no npm publish in this phase.
+
+## Trade-off
+
+Documentation and tests take longer than a gallery of unstyled demos. That cost is the point — the site has to explain the decisions, not only render the components.

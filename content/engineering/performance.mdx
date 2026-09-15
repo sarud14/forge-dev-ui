@@ -1,0 +1,20 @@
+---
+slug: performance
+title: Performance
+summary: Static docs and server components first. Bundle budgets and Web Vitals are Phase 4.
+order: 2
+---
+
+## Stance
+
+Phase 1 is a documentation site. Pages should ship as static HTML where the content is known at build time. Client JavaScript is added only for interaction — playground controls, dialogs, toasts, and matchMedia for the shell.
+
+## What we do now
+
+- Component, pattern, and engineering docs use `generateStaticParams` or explicit routes so they prerender.
+- Markdown is parsed locally. There is no CMS fetch and no database round-trip.
+- `"use client"` stays on leaves (previews, playground, toast store), not on the article layout.
+
+## What we defer
+
+Bundle size tracking, Lighthouse gates, and Web Vitals reporting belong to Phase 4. Do not invent a performance dashboard in this phase. If a page feels heavy, the first question is whether a client boundary leaked onto a read-only doc.

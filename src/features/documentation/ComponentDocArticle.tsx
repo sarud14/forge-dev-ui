@@ -7,7 +7,7 @@ interface ComponentDocArticleProps {
   readonly title: string
   readonly summary: string
   readonly body: string
-  readonly preview: ReactNode
+  readonly preview?: ReactNode
   readonly backHref: string
   readonly backLabel: string
 }
@@ -60,7 +60,7 @@ export function ComponentDocArticle({
         {summary}
       </p>
       <MarkdownBody source={body} />
-      <div style={{ marginTop: 'var(--space-8)' }}>{preview}</div>
+      {preview == null ? null : <div style={{ marginTop: 'var(--space-8)' }}>{preview}</div>}
     </article>
   )
 }
