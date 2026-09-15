@@ -88,7 +88,9 @@ src/
 │   ├── seo/
 │   │   └── siteMetadata.ts <- title/OG/JSON-LD/robots/sitemap builders (no feature imports)
 │   └── content/
-│       └── source.ts      <- single content-read abstraction (getComponentDocs(), etc.)
+│       ├── source.ts           <- single content-read abstraction (getComponentDocs(), etc.)
+│       ├── parseFrontmatter.ts <- local `---` fence parser (no gray-matter in Phase 1)
+│       └── parseMarkdown.ts    <- Phase 1 markdown subset (`##`, lists, paragraphs)
 ├── types/
 ├── components/
 │   └── ui/                 <- the design system, see docs/DESIGN_SYSTEM.md
@@ -112,8 +114,8 @@ src/
 └── env.ts
 
 content/
-├── components/
-├── patterns/
+├── components/            <- Phase 1 MDX docs, one file per locked primitive
+├── patterns/              <- stub until a later Phase 1 content pass
 ├── decisions/
 └── guides/
 
@@ -229,8 +231,12 @@ Forge has no live backend — "data" is MDX content, not fixtures for a future A
 - Content types (frontmatter shape for components/patterns/decisions/guides docs) live in
   `src/types/content.types.ts`.
 - `src/lib/content/source.ts` exposes `getComponentDocs()`, `getComponentDoc(slug)`,
-  `getPatternDocs()`, `getDecisionDocs()` — pure read functions over `content/`, per
-  requirement doc §4. No component or route reads the filesystem directly.
+  `componentDocHref(slug)`, `getPatternDocs()`, `getDecisionDocs()` — pure read functions over
+  `content/`, per requirement doc §4. No component or route reads the filesystem directly.
+- Phase 1 parses `content/components/*.mdx` with `parseFrontmatter.ts` and renders the markdown
+  subset via `parseMarkdown.ts` + `features/documentation/MarkdownBody.tsx`. JSX in MDX is not
+  compiled yet (no extra MDX package — AGENTS.md "Ask First").
+- `getPatternDocs()` / `getDecisionDocs()` still return `[]` until those folders are filled.
 - Any value derived from content for display (e.g. a computed "last updated" label) is a pure
   helper in `src/lib/content/`, never inline in a route component.
 

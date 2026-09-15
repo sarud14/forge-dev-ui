@@ -1,0 +1,18 @@
+---
+slug: select
+title: Select
+summary: Composed Radix combobox. Pass options, not a hand-assembled Trigger/Content tree.
+order: 3
+---
+
+## When to use
+
+Use Select when the user picks one value from a known list. Prefer Input when the value is free text.
+
+## API
+
+`options` is `{ value, label, disabled? }[]`. Wire `value` / `defaultValue` / `onValueChange` like a controlled field. Pass `aria-label` (or a visible label) — the trigger has no built-in `<label>`.
+
+## Accessibility
+
+Combobox, listbox, and option roles — plus typeahead — come from Radix. Disabled uses Radix’s disabled state on the trigger.

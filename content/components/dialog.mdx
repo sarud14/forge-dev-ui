@@ -1,0 +1,18 @@
+---
+slug: dialog
+title: Dialog
+summary: Modal confirm/dismiss surface with focus trap, Escape, and overlay click.
+order: 6
+---
+
+## When to use
+
+Use Dialog when the user must confirm or complete a short task before returning to the page. Do not use it for long forms.
+
+## API
+
+`trigger` is the opening control. `title` is required. `description` is optional. Pass `children` for a custom footer; omit it for the default Cancel / Confirm pair. `open` / `onOpenChange` enable controlled mode.
+
+## Accessibility
+
+Focus is trapped while open and restored to the trigger on close. Escape and overlay-click dismiss. `role="dialog"` and `aria-modal` come from Radix.

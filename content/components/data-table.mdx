@@ -1,0 +1,18 @@
+---
+slug: data-table
+title: Data Table
+summary: Tabular data with per-column sort. Sortable headers are real buttons.
+order: 8
+---
+
+## When to use
+
+Use Data Table for comparable rows of the same shape. Prefer a list or definition list when there is only one field per item.
+
+## API
+
+`columns` is `{ id, header, cell, sortable?, sortValue? }[]`. `getRowId` is required. `emptyState` defaults to “No results.” `sortable: true` requires `sortValue` so ordering does not depend on whatever ReactNode `cell` returns.
+
+## Accessibility
+
+Renders a native `<table>`. Sortable headers are real buttons with accessible names. `aria-sort` on the columnheader exposes none, ascending, or descending.

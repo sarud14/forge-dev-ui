@@ -1,0 +1,18 @@
+---
+slug: tabs
+title: Tabs
+summary: Composed Radix tabs. Pass items with value, label, and panel content.
+order: 4
+---
+
+## When to use
+
+Use Tabs to switch between mutually exclusive panels in the same view. Do not use them as page navigation.
+
+## API
+
+`items` is `{ value, label, content, disabled? }[]`. `defaultValue` / `value` / `onValueChange` follow Radix. `aria-label` names the tablist.
+
+## Accessibility
+
+Tablist, tab, and tabpanel roles come from Radix. Arrow keys, Home, and End move between tabs.

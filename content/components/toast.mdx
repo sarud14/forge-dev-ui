@@ -1,0 +1,18 @@
+---
+slug: toast
+title: Toast
+summary: Transient notification fired with toast() and announced in a live region.
+order: 7
+---
+
+## When to use
+
+Use Toast for outcomes the user does not have to act on immediately — saved, failed, copied. Use Dialog when the user must decide now.
+
+## API
+
+Call `toast({ tone, title, description, duration })`. `tone` is `neutral`, `success`, or `danger`. Mount `Toaster` once in the root layout. Pass `Infinity` to keep a toast until Dismiss.
+
+## Accessibility
+
+Toasts render in a Radix live region so they are announced without moving keyboard focus. Dismiss is a real button named “Dismiss”.

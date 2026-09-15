@@ -1,0 +1,18 @@
+---
+slug: tooltip
+title: Tooltip
+summary: Supplementary label on hover and focus. Dismisses on Escape.
+order: 5
+---
+
+## When to use
+
+Use Tooltip for extra context that is not required to complete the task. Do not put essential instructions only in a tooltip.
+
+## API
+
+`content` is the label. `side` is `top`, `right`, `bottom`, or `left`. `delayDuration` defaults to 700ms via `TooltipProvider` in the root layout. Pass `0` in tests and snappy demos.
+
+## Accessibility
+
+The trigger keeps its own semantics (`asChild`, typically a Button). Content uses `role="tooltip"` and dismisses on Escape.
