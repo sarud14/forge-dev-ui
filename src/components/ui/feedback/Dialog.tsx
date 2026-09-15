@@ -29,7 +29,7 @@ export function Dialog({
           style={{ background: 'rgba(6, 8, 12, 0.6)' }}
         />
         <RadixDialog.Content
-          className="fixed left-1/2 top-1/2 z-10 w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-lg)] border p-[30px]"
+          className="fixed left-1/2 top-1/2 z-10 w-[min(var(--size-dialog),calc(100vw-2*var(--space-3)))] max-w-[calc(100vw-2*var(--space-3))] -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-lg)] border p-[var(--space-4)]"
           style={{ background: 'var(--color-muted)', borderColor: 'var(--color-border)' }}
         >
           <RadixDialog.Title

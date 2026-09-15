@@ -1,0 +1,17 @@
+/* Viewport stops for Forge layout. Values are CSS pixels of the named device class,
+   not Tailwind's default sm/md/lg (those stay Size tokens on components).
+   Keep src/components/ui/breakpoints.ts in sync — CSS custom properties cannot be
+   read from matchMedia, so JS duplicates the pixel numbers. */
+:root {
+  --bp-phone-sm: 360px; /* compact phones */
+  --bp-phone-lg: 430px; /* iPhone Pro Max-class */
+  --bp-tablet: 768px;
+  --bp-laptop: 1024px; /* persistent sidebar from here up */
+  --bp-desktop: 1440px;
+
+  --size-sidebar: 14.375rem; /* 230px — Editorial Dark shell */
+  --size-dialog: 26.25rem; /* 420px */
+  --size-content: 57.5rem; /* 920px */
+  --size-content-wide: 65rem; /* 1040px */
+  --size-playground-rail: 17.5rem; /* 280px */
+}

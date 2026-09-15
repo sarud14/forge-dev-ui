@@ -5,7 +5,7 @@ import './globals.css'
 import { env } from '@/env'
 import { SITE_DESCRIPTION } from '@/constants/seo'
 import { Toaster, TooltipProvider, DEFAULT_TOOLTIP_DELAY_MS } from '@/components/ui'
-import { Sidebar } from '@/features/shell/Sidebar'
+import { AppShell } from '@/features/shell/AppShell'
 import { buildSiteMetadata, buildWebSiteJsonLd } from '@/lib/seo/siteMetadata'
 
 // Editorial Dark type system (design/forge-editorial-dark, picked 2026-09-11) — sets the
@@ -44,10 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }): JSX.E
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
         />
         <TooltipProvider delayDuration={DEFAULT_TOOLTIP_DELAY_MS}>
-          <div style={{ display: 'flex', minHeight: '100vh', width: '100%' }}>
-            <Sidebar />
-            <main style={{ flex: 1, minWidth: 0, overflow: 'auto' }}>{children}</main>
-          </div>
+          <AppShell>{children}</AppShell>
           <Toaster />
         </TooltipProvider>
       </body>

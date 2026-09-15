@@ -103,7 +103,8 @@ src/
 │       │   ├── typography.css
 │       │   ├── radius.css
 │       │   ├── elevation.css
-│       │   └── motion.css
+│       │   ├── motion.css
+│       │   └── breakpoints.css  <- viewport stops + shell/dialog/content widths
 │       ├── core/            <- Button, Tabs, Tooltip
 │       ├── forms/           <- Input, Select
 │       ├── feedback/        <- Dialog, Toast

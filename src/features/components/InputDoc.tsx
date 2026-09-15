@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type JSX } from 'react'
-import { Input } from '@/components/ui'
+import { Input, PREVIEW_GRID_CLASS } from '@/components/ui'
 import type { InputTone } from '@/components/ui'
 import { EMAIL_INVALID_MESSAGE } from '@/validators/email.validators'
 
@@ -75,7 +75,7 @@ export function InputDoc(): JSX.Element {
       </div>
 
       {activeTab === 'preview' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-3)' }}>
+        <div className={PREVIEW_GRID_CLASS}>
           <div
             style={{
               border: '1px solid var(--color-border)',

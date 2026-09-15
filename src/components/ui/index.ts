@@ -11,6 +11,15 @@ export { Toaster } from './feedback/Toaster'
 export { toast, clearToasts, DEFAULT_TOAST_DURATION_MS } from './feedback/toastStore'
 export { DataTable } from './data/DataTable'
 export { DEFAULT_EMPTY_STATE } from './data/sortTableRows'
+export { BREAKPOINTS, minWidthQuery } from './breakpoints'
+export {
+  HOME_CARD_GRID_CLASS,
+  PAGE_FRAME_DOC_CLASS,
+  PAGE_FRAME_WIDE_CLASS,
+  PLAYGROUND_SPLIT_CLASS,
+  PREVIEW_GRID_CLASS,
+  TOKEN_SWATCH_GRID_CLASS,
+} from './helpers'
 
 export type {
   Size,
@@ -36,3 +45,4 @@ export type {
   DataTableColumn,
   DataTableProps,
 } from './types'
+export type { BreakpointName } from './breakpoints'

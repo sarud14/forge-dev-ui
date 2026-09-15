@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import type { JSX } from 'react'
+import { TOKEN_SWATCH_GRID_CLASS } from '@/components/ui'
+import { PageFrame } from '@/features/shell/PageFrame'
 
 export const metadata: Metadata = { title: 'Foundations' }
 
@@ -31,7 +33,7 @@ const radiusTokens = [
 
 export default function FoundationsPage(): JSX.Element {
   return (
-    <div style={{ padding: '64px 56px', maxWidth: 920 }}>
+    <PageFrame width="doc">
       <div
         style={{
           fontSize: 'var(--text-xs)',
@@ -67,14 +69,7 @@ export default function FoundationsPage(): JSX.Element {
       >
         Color
       </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: 14,
-          marginBottom: 'var(--space-8)',
-        }}
-      >
+      <div className={TOKEN_SWATCH_GRID_CLASS}>
         {colorTokens.map((tok) => (
           <div
             key={tok.name}
@@ -105,6 +100,54 @@ export default function FoundationsPage(): JSX.Element {
           marginBottom: 14,
         }}
       >
+        Breakpoints
+      </div>
+      <p
+        style={{
+          fontSize: 'var(--text-base)',
+          color: 'var(--color-muted-foreground)',
+          lineHeight: 'var(--leading-relaxed)',
+          margin: '0 0 var(--space-4)',
+        }}
+      >
+        Named viewport stops. Layout is mobile-first; the laptop stop is where the sidebar
+        stays on screen.
+      </p>
+      <ul
+        style={{
+          margin: '0 0 var(--space-8)',
+          paddingLeft: 20,
+          color: 'var(--color-muted-foreground)',
+          lineHeight: 'var(--leading-relaxed)',
+        }}
+      >
+        <li>
+          <code>--bp-phone-sm</code> · 360px · compact phone
+        </li>
+        <li>
+          <code>--bp-phone-lg</code> · 430px · Pro Max-class phone
+        </li>
+        <li>
+          <code>--bp-tablet</code> · 768px
+        </li>
+        <li>
+          <code>--bp-laptop</code> · 1024px · persistent sidebar
+        </li>
+        <li>
+          <code>--bp-desktop</code> · 1440px
+        </li>
+      </ul>
+
+      <div
+        style={{
+          fontSize: 'var(--text-xs)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.06em',
+          fontWeight: 600,
+          color: 'var(--color-muted-foreground)',
+          marginBottom: 14,
+        }}
+      >
         Spacing scale
       </div>
       <div
@@ -117,6 +160,7 @@ export default function FoundationsPage(): JSX.Element {
           padding: 'var(--space-4)',
           marginBottom: 'var(--space-8)',
           border: '1px solid var(--color-border)',
+          overflowX: 'auto',
         }}
       >
         {spaceTokens.map((sp) => (
@@ -147,6 +191,7 @@ export default function FoundationsPage(): JSX.Element {
           borderRadius: 'var(--radius-lg)',
           padding: 'var(--space-4)',
           border: '1px solid var(--color-border)',
+          overflowX: 'auto',
         }}
       >
         {radiusTokens.map((r) => (
@@ -164,6 +209,6 @@ export default function FoundationsPage(): JSX.Element {
           </div>
         ))}
       </div>
-    </div>
+    </PageFrame>
   )
 }

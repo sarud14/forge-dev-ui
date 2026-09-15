@@ -1,5 +1,7 @@
 import type { JSX } from 'react'
 import Link from 'next/link'
+import { HOME_CARD_GRID_CLASS } from '@/components/ui'
+import { PageFrame } from '@/features/shell/PageFrame'
 
 const layers = [
   'Foundations',
@@ -34,7 +36,7 @@ const homeCards = [
 
 export default function HomePage(): JSX.Element {
   return (
-    <div style={{ padding: '64px 56px', maxWidth: 920 }}>
+    <PageFrame width="doc">
       <div
         style={{
           fontSize: 'var(--text-xs)',
@@ -97,7 +99,7 @@ export default function HomePage(): JSX.Element {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-4)' }}>
+      <div className={HOME_CARD_GRID_CLASS}>
         {homeCards.map((card) => (
           <Link
             key={card.href}
@@ -145,6 +147,6 @@ export default function HomePage(): JSX.Element {
           </Link>
         ))}
       </div>
-    </div>
+    </PageFrame>
   )
 }
