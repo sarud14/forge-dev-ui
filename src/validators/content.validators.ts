@@ -1,4 +1,4 @@
-import type { ComponentDocMeta } from '@/types/content.types'
+import type { ContentDocMeta } from '@/types/content.types'
 
 const SLUG_PATTERN = /^[a-z0-9-]+$/
 
@@ -6,9 +6,9 @@ export function isSafeContentSlug(value: string): boolean {
   return SLUG_PATTERN.test(value)
 }
 
-export function parseComponentDocMeta(
+export function parseContentDocMeta(
   data: Readonly<Record<string, string>>
-): ComponentDocMeta | null {
+): ContentDocMeta | null {
   const slug = data['slug']
   const title = data['title']
   const summary = data['summary']

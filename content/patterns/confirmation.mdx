@@ -1,0 +1,18 @@
+---
+slug: confirmation
+title: Confirmation
+summary: A Dialog that asks the user to confirm a destructive or irreversible action.
+order: 7
+---
+
+## When to use
+
+Use Confirmation when the action cannot be undone easily — delete, replace, discard. Do not use it for every save.
+
+## How
+
+Open Dialog from the triggering Button. Title states the action. Description states the consequence. Default footer is Cancel / Confirm. The caller performs the mutation on Confirm.
+
+## Accessibility
+
+Focus is trapped while open and restored to the trigger on close. Escape and overlay-click dismiss. The title is the dialog name.

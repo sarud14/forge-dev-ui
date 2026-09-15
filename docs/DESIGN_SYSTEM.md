@@ -371,20 +371,20 @@ Testing Conventions).
   `/components` (index driven by `getComponentDocs()` — Button, Input, Select, Tabs, Tooltip,
   Dialog, Toast, and Data Table, each with Preview/Code/Accessibility tabs via
   `src/features/components/*Doc.tsx`), `/components/[slug]` (MDX body from
-  `content/components/*.mdx` plus the matching live preview), `/playground`
+  `content/components/*.mdx` plus the matching live preview), `/patterns` and `/patterns/[slug]`
+  (MDX from `content/patterns/*.mdx` plus a composed preview via `PatternPreview`), `/playground`
   (live Button, Input, Select, Tabs, Tooltip, Data Table prop editors + Dialog demo + RHF/Zod
   email form + Toast firer, via `src/features/playground/PlaygroundControls.tsx`). `Toaster` and
   `TooltipProvider` are mounted in `src/app/layout.tsx`.
-- **Not yet restyled:** `/patterns` and `/engineering` remain the original plain placeholder
-  stub pages (no sidebar-shell styling applied) — out of scope for this pass since the mockup
-  didn't cover those routes; restyle when their real content is built.
+- **Not yet restyled:** `/engineering` remains the original plain placeholder stub (no
+  Editorial Dark content yet — restyle when those write-ups are written).
 - **Available, not yet used by any screen:** N/A
 - **Ported but not yet finished:** N/A — nothing is ported; everything is hand-built per
   requirement doc §3.3.
 - **Known gaps:** `Button`'s `isLoading` state has no spinner asset — it swaps to literal
   "Loading…" text; `--radius-lg` on `Button`'s `lg` size is normalized from the mockup's literal
   10px to the token's 16px (see "Design tokens" → "Radius normalization").
-  `/patterns` and `/engineering` stubs are still unpadded placeholders.
+  `/engineering` stubs are still unpadded placeholders.
 - **Known substitutions:** none for the built components — Public Sans/Spectral/IBM Plex Mono
   and the teal accent (`#45c4b0`, also used by the logo mark) are the real, chosen values, not
   placeholders.

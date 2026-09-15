@@ -8,30 +8,34 @@ interface ComponentDocArticleProps {
   readonly summary: string
   readonly body: string
   readonly preview: ReactNode
+  readonly backHref: string
+  readonly backLabel: string
 }
 
 /**
  * Per-slug documentation layout. Preview is passed in so this feature does not import
- * features/components (AGENTS.md "No feature imports another feature's folder").
+ * other feature folders (AGENTS.md "No feature imports another feature's folder").
  */
 export function ComponentDocArticle({
   title,
   summary,
   body,
   preview,
+  backHref,
+  backLabel,
 }: ComponentDocArticleProps): JSX.Element {
   return (
     <article className={PAGE_FRAME_DOC_CLASS}>
       <p style={{ margin: '0 0 var(--space-4)' }}>
         <Link
-          href="/components"
+          href={backHref}
           style={{
             fontSize: 'var(--text-sm)',
             color: 'var(--color-primary)',
             textDecoration: 'none',
           }}
         >
-          ← Components
+          {backLabel}
         </Link>
       </p>
       <h1

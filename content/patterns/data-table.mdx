@@ -1,0 +1,18 @@
+---
+slug: data-table
+title: Data Table
+summary: Comparable rows with sort. Empty, loading, and error are sibling patterns, not table props.
+order: 3
+---
+
+## When to use
+
+Use Data Table when each row has the same columns. Prefer a list when there is only one field per item.
+
+## How
+
+Pass `columns`, `data`, and `getRowId`. Sortable headers must set `sortValue`. Do not put filters inside the table component — compose Search above it.
+
+## Accessibility
+
+The table is a native `<table>`. Sortable headers are real buttons with `aria-sort`. Caption or `aria-label` names the grid.
