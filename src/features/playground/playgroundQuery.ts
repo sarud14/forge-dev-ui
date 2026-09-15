@@ -116,6 +116,27 @@ export function generateTooltipCode(props: {
   return `<Tooltip ${attrs.join(' ')}><Button>Hover me</Button></Tooltip>`
 }
 
+export interface PlaygroundTableRow {
+  readonly id: string
+  readonly name: string
+  readonly status: string
+  readonly count: number
+}
+
+export const PLAYGROUND_TABLE_ROWS: readonly PlaygroundTableRow[] = [
+  { id: 'button', name: 'Button', status: 'Stable', count: 4 },
+  { id: 'input', name: 'Input', status: 'Stable', count: 2 },
+  { id: 'toast', name: 'Toast', status: 'Draft', count: 3 },
+]
+
+export function generateDataTableCode(props: { readonly isEmpty: boolean }): string {
+  if (props.isEmpty) {
+    return '<DataTable columns={columns} data={[]} getRowId={(row) => row.id} />'
+  }
+
+  return '<DataTable columns={columns} data={rows} getRowId={(row) => row.id} />'
+}
+
 export {
   BUTTON_VARIANTS,
   SIZES,

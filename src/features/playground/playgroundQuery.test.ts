@@ -7,6 +7,7 @@ import {
   generateTabsCode,
   generateToastCode,
   generateTooltipCode,
+  generateDataTableCode,
   isButtonVariant,
   isInputTone,
   isPlaygroundTabValue,
@@ -129,6 +130,20 @@ describe('generateTooltipCode', () => {
   it('includes a non-default side', () => {
     expect(generateTooltipCode({ content: 'On the right', side: 'right' })).toBe(
       '<Tooltip content="On the right" side="right"><Button>Hover me</Button></Tooltip>'
+    )
+  })
+})
+
+describe('generateDataTableCode', () => {
+  it('emits rows by default', () => {
+    expect(generateDataTableCode({ isEmpty: false })).toBe(
+      '<DataTable columns={columns} data={rows} getRowId={(row) => row.id} />'
+    )
+  })
+
+  it('emits an empty data array when empty', () => {
+    expect(generateDataTableCode({ isEmpty: true })).toBe(
+      '<DataTable columns={columns} data={[]} getRowId={(row) => row.id} />'
     )
   })
 })

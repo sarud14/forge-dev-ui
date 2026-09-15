@@ -9,6 +9,8 @@ export { Dialog } from './feedback/Dialog'
 export { Toast } from './feedback/Toast'
 export { Toaster } from './feedback/Toaster'
 export { toast, clearToasts, DEFAULT_TOAST_DURATION_MS } from './feedback/toastStore'
+export { DataTable } from './data/DataTable'
+export { DEFAULT_EMPTY_STATE } from './data/sortTableRows'
 
 export type {
   Size,
@@ -29,4 +31,8 @@ export type {
   ToastTone,
   ToastInput,
   ToastRecord,
+  DataTableSortDirection,
+  DataTableSort,
+  DataTableColumn,
+  DataTableProps,
 } from './types'

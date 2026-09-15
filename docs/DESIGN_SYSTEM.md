@@ -4,9 +4,7 @@
 Scaffolded. Tokens and the Button/Dialog components below reflect the "Editorial Dark" visual
 direction (design/Forge Prototype Editorial Dark standalone.html, adopted 2026-09-11 — see
 "Design tokens" and "Status / gaps" below), which fully replaced the earlier amber/JetBrains-Mono
-brand direction. Select, Tabs, and Tooltip are built (Build Order step 9). Data Table is still
-proposed only — treat that section as a draft to confirm during Build Order step 10, not a locked
-decision.
+brand direction. Select, Tabs, Tooltip, and Data Table are built (Build Order steps 9–10).
 -->
 
 The local, editable design system for Forge. Hand-built from scratch — Forge's whole point is
@@ -37,7 +35,7 @@ components/ui/
   core/             Button (built), Tabs (built), Tooltip (built)
   forms/            Input (built), Select (built)
   feedback/         Dialog (built), Toast (built)
-  data/             Data Table (proposed)
+  data/             Data Table (built)
 ```
 
 `navigation/` is not created yet — add it if a future component needs its own group rather
@@ -278,15 +276,21 @@ toast({ tone: 'success', title: 'Saved' });
 
 ### Data
 
-#### `Data Table`
+#### `Data Table` — built
 
-Tabular data display — the most complex Phase 1 component (requirement doc §11 step 10).
+Tabular data display — the most complex Phase 1 component (requirement doc §11 step 10). Sort
+logic lives in `sortTableRows` (no React) so it is unit-tested without rendering.
 
-- `columns` · `data` · `sortable` (per-column) · `emptyState`
+- `columns` (`{ id, header, cell, sortable?, sortValue? }[]`) · `data` · `getRowId` ·
+  `emptyState` (default `No results.`) · `caption?` · `aria-label?` · `sort` / `defaultSort` /
+  `onSortChange`
+- `sortable: true` requires `sortValue` so ordering is independent of whatever ReactNode `cell`
+  returns. First click sorts ascending; clicking again toggles descending.
 - Sortable headers are real `<button>` elements with accessible names, not click-handled divs.
+  `aria-sort` on the columnheader exposes `none` / `ascending` / `descending`.
 
 ```tsx
-<DataTable columns={columns} data={rows} />
+<DataTable columns={columns} data={rows} getRowId={(row) => row.id} />
 ```
 
 ---
@@ -312,7 +316,8 @@ docs/ARCHITECTURE.md's "Accessibility commitments", scoped to the component leve
 - `Tabs` → tablist/tab/tabpanel; arrow keys, Home, End via Radix
 - `Tooltip` → `role="tooltip"`, Escape dismiss; `TooltipProvider` in the root layout
 - `Toast` → rendered in a live region so it's announced without requiring visual focus
-- `Data Table` → sortable headers are real buttons with accessible names
+- `Data Table` → sortable headers are real buttons with accessible names; `aria-sort` on the
+  columnheader
 - `Input` → `aria-invalid` and an associated error message via `aria-describedby` when invalid
 
 **Test at the semantic layer** — roles, labels, `aria-*`, and stable `data-*` hooks. Do not
@@ -339,15 +344,16 @@ Testing Conventions).
 
 ## Status / gaps
 
-- **Fully styled and in use:** `Button`, `Input`, `Select`, `Tabs`, `Tooltip`, `Dialog`, `Toast`.
+- **Fully styled and in use:** `Button`, `Input`, `Select`, `Tabs`, `Tooltip`, `Dialog`, `Toast`,
+  `DataTable`.
   "Editorial Dark" is the locked visual
   direction as of 2026-09-11 (dark-only, no light theme) — see "Design tokens" above and
   `design/Forge Prototype Editorial Dark standalone.html` for the source mockup.
 - **Screens built against the new system:** `/` (Home), `/foundations` (token showcase),
-  `/components` (Button, Input, Select, Tabs, Tooltip, and Toast docs: Preview/Code/Accessibility
-  tabs, via `src/features/components/*Doc.tsx`), `/playground`
-  (live Button, Input, Select, Tabs, Tooltip prop editors + Dialog demo + RHF/Zod email form +
-  Toast firer, via `src/features/playground/PlaygroundControls.tsx`). `Toaster` and
+  `/components` (Button, Input, Select, Tabs, Tooltip, Toast, and Data Table docs:
+  Preview/Code/Accessibility tabs, via `src/features/components/*Doc.tsx`), `/playground`
+  (live Button, Input, Select, Tabs, Tooltip, Data Table prop editors + Dialog demo + RHF/Zod
+  email form + Toast firer, via `src/features/playground/PlaygroundControls.tsx`). `Toaster` and
   `TooltipProvider` are mounted in `src/app/layout.tsx`.
 - **Not yet restyled:** `/patterns` and `/engineering` remain the original plain placeholder
   stub pages (no sidebar-shell styling applied) — out of scope for this pass since the mockup

@@ -121,3 +121,38 @@ export interface ToastRecord {
   readonly description?: string
   readonly duration: number
 }
+
+export type DataTableSortDirection = 'asc' | 'desc'
+
+export interface DataTableSort {
+  readonly columnId: string
+  readonly direction: DataTableSortDirection
+}
+
+/**
+ * Column definition. `sortable: true` requires `sortValue` so ordering is independent of
+ * whatever ReactNode `cell` returns.
+ */
+export interface DataTableColumn<T> {
+  readonly id: string
+  readonly header: string
+  readonly cell: (row: T) => ReactNode
+  readonly sortable?: boolean
+  readonly sortValue?: (row: T) => string | number
+}
+
+/**
+ * Tabular data display. Sortable headers are real buttons (docs/DESIGN_SYSTEM.md).
+ * `getRowId` is required so row keys are explicit, not inferred from an `id` field.
+ */
+export interface DataTableProps<T> {
+  readonly columns: readonly DataTableColumn<T>[]
+  readonly data: readonly T[]
+  readonly getRowId: (row: T) => string
+  readonly emptyState?: ReactNode
+  readonly caption?: string
+  readonly 'aria-label'?: string
+  readonly sort?: DataTableSort
+  readonly defaultSort?: DataTableSort
+  readonly onSortChange?: (sort: DataTableSort) => void
+}
