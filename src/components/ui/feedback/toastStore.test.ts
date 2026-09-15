@@ -3,6 +3,7 @@ import {
   clearToasts,
   DEFAULT_TOAST_DURATION_MS,
   dismissToast,
+  getToastsServerSnapshot,
   getToastsSnapshot,
   toast,
 } from './toastStore'
@@ -40,6 +41,11 @@ describe('toastStore', () => {
       description: 'Try again.',
       duration: 1000,
     })
+  })
+
+  it('returns the same empty array from getToastsServerSnapshot', () => {
+    expect(getToastsServerSnapshot()).toBe(getToastsServerSnapshot())
+    expect(getToastsServerSnapshot()).toEqual([])
   })
 
   it('dismisses a toast by id', () => {
