@@ -29,3 +29,10 @@ test('engineering write-up renders MDX body', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Stance' })).toBeVisible()
   await expect(page.getByRole('link', { name: '← Engineering' })).toBeVisible()
 })
+
+test('foundation doc page renders MDX body and token swatches', async ({ page }) => {
+  await page.goto('/foundations/tokens')
+  await expect(page.getByRole('heading', { level: 1, name: 'Tokens' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Source of truth' })).toBeVisible()
+  await expect(page.getByRole('img', { name: '--color-primary swatch' })).toBeVisible()
+})

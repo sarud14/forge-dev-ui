@@ -27,6 +27,12 @@ export interface EngineeringDoc extends ContentDocMeta {
   readonly body: string
 }
 
+export type FoundationDocMeta = ContentDocMeta
+
+export interface FoundationDoc extends ContentDocMeta {
+  readonly body: string
+}
+
 export interface DecisionDocMeta {
   readonly slug: string
   readonly title: string
